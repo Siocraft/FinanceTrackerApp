@@ -1,0 +1,36 @@
+# <type>(<scope>): <subject>
+#
+# <body>
+#
+# <footer>
+
+# Types:
+#   feat     (new feature for the user, not a new feature for build script)
+#   fix      (bug fix for the user, not a fix to a build script)
+#   docs     (changes to the documentation)
+#   style    (formatting, missing semi colons, etc; no production code change)
+#   refactor (refactoring production code, eg. renaming a variable)
+#   test     (adding missing tests, refactoring tests; no production code change)
+#   chore    (updating grunt tasks etc; no production code change)
+#   perf     (performance improvements)
+#   ci       (CI/CD related changes)
+#   build    (build system or external dependencies)
+#   revert   (revert a previous commit)
+
+# Scopes:
+#   app      (application level changes)
+#   api      (API related changes)
+#   ui       (UI/UX changes)
+#   auth     (authentication related)
+#   db       (database related)
+#   test     (testing related)
+#   deps     (dependencies)
+#   config   (configuration files)
+
+# Examples:
+# feat(api): add user authentication endpoint
+# fix(ui): resolve navigation header alignment issue
+# docs(readme): update installation instructions
+# refactor(components): extract reusable button component
+# test(hooks): add unit tests for useTransactions hook
+# chore(deps): update React Native to latest version

@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🔍 Running pre-commit quality checks..."
+
+# Check TypeScript
+echo "📝 Checking TypeScript..."
+npx tsc --noEmit --skipLibCheck
+
+# Run ESLint
+echo "🧹 Running ESLint..."
+npx eslint src/ --ext .ts,.tsx --max-warnings 0
+
+# Check Prettier formatting
+echo "💅 Checking Prettier formatting..."
+npx prettier --check "src/**/*.{ts,tsx,js,jsx,json}"
+
+# Run tests
+echo "🧪 Running tests..."
+npm test -- --coverage --watchAll=false --passWithNoTests
+
+echo "✅ All quality checks passed!"
