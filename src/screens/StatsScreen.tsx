@@ -49,27 +49,27 @@ export const StatsScreen: React.FC = () => {
     });
 
     const totalIncome = transactions
-      .filter(t => t.type === 'income')
-      .reduce((sum, t) => sum + t.amount, 0);
+      .filter(total => total.type === 'income')
+      .reduce((sum, total) => sum + total.amount, 0);
 
     const totalExpenses = transactions
-      .filter(t => t.type === 'expense')
-      .reduce((sum, t) => sum + t.amount, 0);
+      .filter(total => total.type === 'expense')
+      .reduce((sum, total) => sum + total.amount, 0);
 
     const monthlyIncome = currentMonthTransactions
-      .filter(t => t.type === 'income')
-      .reduce((sum, t) => sum + t.amount, 0);
+      .filter(monthly => monthly.type === 'income')
+      .reduce((sum, monthly) => sum + monthly.amount, 0);
 
     const monthlyExpenses = currentMonthTransactions
-      .filter(t => t.type === 'expense')
-      .reduce((sum, t) => sum + t.amount, 0);
+      .filter(monthly => monthly.type === 'expense')
+      .reduce((sum, monthly) => sum + monthly.amount, 0);
 
     const categoryBreakdown = transactions.reduce(
-      (acc, t) => {
-        if (!acc[t.category]) {
-          acc[t.category] = { income: 0, expense: 0 };
+      (acc, category) => {
+        if (!acc[category.category]) {
+          acc[category.category] = { income: 0, expense: 0 };
         }
-        acc[t.category][t.type] += t.amount;
+        acc[category.category][category.type] += category.amount;
         return acc;
       },
       {} as Record<string, { income: number; expense: number }>
