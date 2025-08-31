@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 import { Card } from '../common/Card';
 import { ThemedText } from '../common/ThemedText';
 import { useTheme } from '../../theme';
@@ -19,6 +20,7 @@ export const BalanceCard: React.FC<BalanceCardProps> = ({
   monthlyExpenses,
   currency = '$',
 }) => {
+  const { t } = useTranslation();
   const { theme } = useTheme();
 
   const formatAmount = (amount: number) => {
@@ -40,7 +42,7 @@ export const BalanceCard: React.FC<BalanceCardProps> = ({
       >
         <View style={styles.header}>
           <ThemedText variant='body2' color='textSecondary'>
-            Total Balance
+            {t('balance.totalBalance')}
           </ThemedText>
           <View style={styles.balanceContainer}>
             <ThemedText
@@ -69,7 +71,7 @@ export const BalanceCard: React.FC<BalanceCardProps> = ({
               variant='caption'
               style={{ color: theme.colors.onPrimary, opacity: 0.8 }}
             >
-              Income
+              {t('balance.income')}
             </ThemedText>
             <ThemedText
               variant='body1'
@@ -98,7 +100,7 @@ export const BalanceCard: React.FC<BalanceCardProps> = ({
               variant='caption'
               style={{ color: theme.colors.onPrimary, opacity: 0.8 }}
             >
-              Expenses
+              {t('balance.expenses')}
             </ThemedText>
             <ThemedText
               variant='body1'

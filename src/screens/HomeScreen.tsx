@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, ScrollView, Modal } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { useTranslation } from 'react-i18next';
 import {
   Header,
   BalanceCard,
@@ -18,6 +19,7 @@ import { AddTransactionScreen } from './AddTransactionScreen';
 import { createHomeScreenStyles } from './HomeScreen.styles';
 
 export const HomeScreen: React.FC = () => {
+  const { t } = useTranslation();
   const { isDark, themeType, setThemeType, theme } = useTheme();
   const [showAllTransactions, setShowAllTransactions] = useState(false);
   const [showAddTransaction, setShowAddTransaction] = useState(false);
@@ -126,7 +128,7 @@ export const HomeScreen: React.FC = () => {
 
         {/* Add Transaction Button */}
         <Button
-          title='Add New Transaction'
+          title={t('home.addNewTransaction')}
           onPress={handleAddTransaction}
           variant='outline'
           style={{ marginBottom: 32 }}

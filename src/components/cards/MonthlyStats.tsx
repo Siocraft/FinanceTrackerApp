@@ -1,5 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { ThemedText } from '../common/ThemedText';
 import { Card } from '../common/Card';
 import { useTheme } from '../../theme';
@@ -16,6 +17,7 @@ export const MonthlyStats: React.FC<MonthlyStatsProps> = ({
   avgDaily,
   savings,
 }) => {
+  const { t } = useTranslation();
   const { theme } = useTheme();
   const styles = createMonthlyStatsStyles(theme);
 
@@ -26,12 +28,12 @@ export const MonthlyStats: React.FC<MonthlyStatsProps> = ({
         weight='600'
         style={{ marginBottom: theme.spacing.md }}
       >
-        This Month
+        {t('monthlyStats.title')}
       </ThemedText>
       <View style={styles.statsRow}>
         <View style={styles.statItem}>
           <ThemedText variant='body2' color='textSecondary'>
-            Transactions
+            {t('monthlyStats.transactions')}
           </ThemedText>
           <ThemedText variant='h3' weight='700' color='primary'>
             {transactionCount}
@@ -39,7 +41,7 @@ export const MonthlyStats: React.FC<MonthlyStatsProps> = ({
         </View>
         <View style={styles.statItem}>
           <ThemedText variant='body2' color='textSecondary'>
-            Avg/Day
+            {t('monthlyStats.avgDaily')}
           </ThemedText>
           <ThemedText variant='h3' weight='700' color='primary'>
             ${avgDaily.toFixed(2)}
@@ -47,7 +49,7 @@ export const MonthlyStats: React.FC<MonthlyStatsProps> = ({
         </View>
         <View style={styles.statItem}>
           <ThemedText variant='body2' color='textSecondary'>
-            Savings
+            {t('monthlyStats.savings')}
           </ThemedText>
           <ThemedText
             variant='h3'

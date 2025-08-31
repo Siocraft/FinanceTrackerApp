@@ -1,0 +1,189 @@
+{
+  "navigation": {
+    "home": "Inicio",
+    "transactions": "Transacciones",
+    "statistics": "Estadísticas",
+    "stats": "Estadísticas",
+    "settings": "Configuración"
+  },
+  "common": {
+    "ok": "OK",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "retry": "Reintentar",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "income": "Ingreso",
+    "expenses": "Gastos",
+    "expense": "Gasto",
+    "amount": "Cantidad",
+    "description": "Descripción",
+    "category": "Categoría"
+  },
+  "header": {
+    "title": "Gestor Financiero",
+    "subtitle": "¡Bienvenido de vuelta!"
+  },
+  "balance": {
+    "totalBalance": "Balance Total",
+    "income": "Ingresos",
+    "expenses": "Gastos"
+  },
+  "monthlyStats": {
+    "title": "Este Mes",
+    "transactions": "Transacciones",
+    "avgDaily": "Promedio/Día",
+    "savings": "Ahorros"
+  },
+  "quickActions": {
+    "addIncome": "Añadir Ingreso",
+    "addExpense": "Añadir Gasto"
+  },
+  "transactionsList": {
+    "recentTransactions": "Transacciones Recientes",
+    "showLess": "Mostrar Menos",
+    "seeAll": "Ver Todas"
+  },
+  "home": {
+    "addNewTransaction": "Añadir Nueva Transacción"
+  },
+  "addTransaction": {
+    "title": "Añadir Transacción",
+    "transactionType": "Tipo de Transacción *",
+    "amount": "Cantidad *",
+    "description": "Descripción *",
+    "category": "Categoría *",
+    "income": "Ingreso",
+    "expense": "Gasto",
+    "placeholders": {
+      "amount": "0,00",
+      "description": "Ingrese descripción..."
+    },
+    "categories": {
+      "income": {
+        "salary": "Salario",
+        "freelance": "Freelance",
+        "investment": "Inversión",
+        "gift": "Regalo",
+        "other": "Otro"
+      },
+      "expense": {
+        "food": "Comida",
+        "transport": "Transporte",
+        "shopping": "Compras",
+        "entertainment": "Entretenimiento",
+        "bills": "Facturas",
+        "health": "Salud",
+        "other": "Otro"
+      }
+    },
+    "buttons": {
+      "addTransaction": "Añadir Transacción",
+      "adding": "Añadiendo..."
+    },
+    "messages": {
+      "fillRequired": "Por favor complete todos los campos requeridos",
+      "validAmount": "Por favor ingrese una cantidad válida",
+      "success": "Transacción añadida exitosamente",
+      "failed": "No se pudo añadir la transacción"
+    }
+  },
+  "transactions": {
+    "title": "Transacciones",
+    "loading": "Cargando transacciones...",
+    "error": {
+      "title": "Error de Conexión",
+      "message": "Ocurrió un error"
+    },
+    "empty": {
+      "title": "Aún No Hay Transacciones",
+      "message": "Comience añadiendo su primera transacción de ingreso o gasto"
+    }
+  },
+  "stats": {
+    "title": "Estadísticas",
+    "loading": "Cargando estadísticas...",
+    "error": {
+      "title": "Error de Conexión",
+      "message": "Ocurrió un error"
+    },
+    "empty": {
+      "title": "No Hay Datos Disponibles",
+      "message": "Añada algunas transacciones para ver sus estadísticas"
+    },
+    "sections": {
+      "overview": "Resumen",
+      "allTime": "Todos los Tiempos",
+      "thisMonth": "Este Mes",
+      "categories": "Categorías"
+    },
+    "labels": {
+      "totalBalance": "Balance Total",
+      "transactions": "Transacciones",
+      "totalIncome": "Ingresos Totales",
+      "totalExpenses": "Gastos Totales",
+      "avgTransaction": "Transacción Promedio",
+      "income": "Ingresos",
+      "expenses": "Gastos"
+    }
+  },
+  "settings": {
+    "title": "Configuración",
+    "items": {
+      "theme": {
+        "title": "Tema",
+        "subtitle": "Elija su tema preferido",
+        "light": "Claro",
+        "dark": "Oscuro"
+      },
+      "language": {
+        "title": "Idioma",
+        "subtitle": "Elija su idioma preferido"
+      },
+      "dataManagement": {
+        "title": "Gestión de Datos",
+        "subtitle": "Aprenda sobre cómo se manejan sus datos"
+      },
+      "helpSupport": {
+        "title": "Ayuda y Soporte",
+        "subtitle": "Obtenga ayuda o envíe comentarios"
+      },
+      "about": {
+        "title": "Acerca de",
+        "subtitle": "Versión de la aplicación e información"
+      }
+    },
+    "footer": {
+      "version": "Gestor Financiero v1.0.0",
+      "built": "Creado con React Native y TypeScript"
+    },
+    "alerts": {
+      "about": {
+        "title": "Acerca del Gestor Financiero",
+        "message": "Una aplicación simple y elegante para seguimiento financiero creada con React Native y TypeScript.\\n\\nVersión 1.0.0"
+      },
+      "dataManagement": {
+        "title": "Gestión de Datos",
+        "message": "Sus datos de transacciones se almacenan localmente y se sincronizan con nuestra API segura. Todos los datos están encriptados y son privados."
+      },
+      "support": {
+        "title": "Soporte",
+        "message": "Para soporte o comentarios, por favor contáctenos en support@financetracker.com"
+      }
+    }
+  },
+  "states": {
+    "loading": {
+      "default": "Cargando sus transacciones..."
+    },
+    "error": {
+      "connectionError": "Error de Conexión",
+      "defaultMessage": "Ocurrió un error"
+    },
+    "empty": {
+      "noTransactions": "Aún No Hay Transacciones",
+      "startAdding": "Comience añadiendo su primera transacción de ingreso o gasto"
+    }
+  }
+}

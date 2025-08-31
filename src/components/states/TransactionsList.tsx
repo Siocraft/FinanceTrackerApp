@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { ThemedText } from '../common/ThemedText';
 import { TransactionCard } from '../cards/TransactionCard';
 import { EmptyState } from './EmptyState';
@@ -20,6 +21,7 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({
   onToggleShowAll,
   onTransactionPress,
 }) => {
+  const { t } = useTranslation();
   const { theme } = useTheme();
   const styles = createTransactionsListStyles(theme);
 
@@ -27,12 +29,14 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({
     <>
       <View style={styles.sectionHeader}>
         <ThemedText variant='h3' weight='600'>
-          Recent Transactions
+          {t('transactionsList.recentTransactions')}
         </ThemedText>
         {transactions && transactions.length > 3 && (
           <TouchableOpacity onPress={onToggleShowAll}>
             <ThemedText variant='body2' color='primary'>
-              {showAllTransactions ? 'Show Less' : 'See All'}
+              {showAllTransactions
+                ? t('transactionsList.showLess')
+                : t('transactionsList.seeAll')}
             </ThemedText>
           </TouchableOpacity>
         )}

@@ -1,0 +1,189 @@
+{
+  "navigation": {
+    "home": "Startseite",
+    "transactions": "Transaktionen",
+    "statistics": "Statistiken",
+    "stats": "Statistiken",
+    "settings": "Einstellungen"
+  },
+  "common": {
+    "ok": "OK",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "retry": "Wiederholen",
+    "loading": "Wird geladen...",
+    "error": "Fehler",
+    "success": "Erfolgreich",
+    "income": "Einkommen",
+    "expenses": "Ausgaben",
+    "expense": "Ausgabe",
+    "amount": "Betrag",
+    "description": "Beschreibung",
+    "category": "Kategorie"
+  },
+  "header": {
+    "title": "Finanz Tracker",
+    "subtitle": "Willkommen zurück!"
+  },
+  "balance": {
+    "totalBalance": "Gesamtbilanz",
+    "income": "Einkommen",
+    "expenses": "Ausgaben"
+  },
+  "monthlyStats": {
+    "title": "Diesen Monat",
+    "transactions": "Transaktionen",
+    "avgDaily": "Durchschn./Tag",
+    "savings": "Ersparnisse"
+  },
+  "quickActions": {
+    "addIncome": "Einkommen hinzufügen",
+    "addExpense": "Ausgabe hinzufügen"
+  },
+  "transactionsList": {
+    "recentTransactions": "Aktuelle Transaktionen",
+    "showLess": "Weniger anzeigen",
+    "seeAll": "Alle anzeigen"
+  },
+  "home": {
+    "addNewTransaction": "Neue Transaktion hinzufügen"
+  },
+  "addTransaction": {
+    "title": "Transaktion hinzufügen",
+    "transactionType": "Transaktionstyp *",
+    "amount": "Betrag *",
+    "description": "Beschreibung *",
+    "category": "Kategorie *",
+    "income": "Einkommen",
+    "expense": "Ausgabe",
+    "placeholders": {
+      "amount": "0,00",
+      "description": "Beschreibung eingeben..."
+    },
+    "categories": {
+      "income": {
+        "salary": "Gehalt",
+        "freelance": "Freiberuflich",
+        "investment": "Investition",
+        "gift": "Geschenk",
+        "other": "Sonstiges"
+      },
+      "expense": {
+        "food": "Essen",
+        "transport": "Transport",
+        "shopping": "Einkaufen",
+        "entertainment": "Unterhaltung",
+        "bills": "Rechnungen",
+        "health": "Gesundheit",
+        "other": "Sonstiges"
+      }
+    },
+    "buttons": {
+      "addTransaction": "Transaktion hinzufügen",
+      "adding": "Wird hinzugefügt..."
+    },
+    "messages": {
+      "fillRequired": "Bitte füllen Sie alle Pflichtfelder aus",
+      "validAmount": "Bitte geben Sie einen gültigen Betrag ein",
+      "success": "Transaktion erfolgreich hinzugefügt",
+      "failed": "Fehler beim Hinzufügen der Transaktion"
+    }
+  },
+  "transactions": {
+    "title": "Transaktionen",
+    "loading": "Transaktionen werden geladen...",
+    "error": {
+      "title": "Verbindungsfehler",
+      "message": "Ein Fehler ist aufgetreten"
+    },
+    "empty": {
+      "title": "Noch keine Transaktionen",
+      "message": "Beginnen Sie mit dem Hinzufügen Ihrer ersten Einkommens- oder Ausgabentransaktion"
+    }
+  },
+  "stats": {
+    "title": "Statistiken",
+    "loading": "Statistiken werden geladen...",
+    "error": {
+      "title": "Verbindungsfehler",
+      "message": "Ein Fehler ist aufgetreten"
+    },
+    "empty": {
+      "title": "Keine Daten verfügbar",
+      "message": "Fügen Sie einige Transaktionen hinzu, um Ihre Statistiken zu sehen"
+    },
+    "sections": {
+      "overview": "Übersicht",
+      "allTime": "Alle Zeiten",
+      "thisMonth": "Diesen Monat",
+      "categories": "Kategorien"
+    },
+    "labels": {
+      "totalBalance": "Gesamtbilanz",
+      "transactions": "Transaktionen",
+      "totalIncome": "Gesamteinkommen",
+      "totalExpenses": "Gesamtausgaben",
+      "avgTransaction": "Durchschn. Transaktion",
+      "income": "Einkommen",
+      "expenses": "Ausgaben"
+    }
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "items": {
+      "theme": {
+        "title": "Design",
+        "subtitle": "Wählen Sie Ihr bevorzugtes Design",
+        "light": "Hell",
+        "dark": "Dunkel"
+      },
+      "language": {
+        "title": "Sprache",
+        "subtitle": "Wählen Sie Ihre bevorzugte Sprache"
+      },
+      "dataManagement": {
+        "title": "Datenverwaltung",
+        "subtitle": "Erfahren Sie, wie Ihre Daten behandelt werden"
+      },
+      "helpSupport": {
+        "title": "Hilfe & Support",
+        "subtitle": "Hilfe erhalten oder Feedback senden"
+      },
+      "about": {
+        "title": "Über",
+        "subtitle": "App-Version und Informationen"
+      }
+    },
+    "footer": {
+      "version": "Finanz Tracker v1.0.0",
+      "built": "Erstellt mit React Native & TypeScript"
+    },
+    "alerts": {
+      "about": {
+        "title": "Über Finanz Tracker",
+        "message": "Eine einfache und elegante Finanz-Tracking-App, erstellt mit React Native und TypeScript.\\n\\nVersion 1.0.0"
+      },
+      "dataManagement": {
+        "title": "Datenverwaltung",
+        "message": "Ihre Transaktionsdaten werden lokal gespeichert und mit unserer sicheren API synchronisiert. Alle Daten sind verschlüsselt und privat."
+      },
+      "support": {
+        "title": "Support",
+        "message": "Für Support oder Feedback kontaktieren Sie uns bitte unter support@financetracker.com"
+      }
+    }
+  },
+  "states": {
+    "loading": {
+      "default": "Ihre Transaktionen werden geladen..."
+    },
+    "error": {
+      "connectionError": "Verbindungsfehler",
+      "defaultMessage": "Ein Fehler ist aufgetreten"
+    },
+    "empty": {
+      "noTransactions": "Noch keine Transaktionen",
+      "startAdding": "Beginnen Sie mit dem Hinzufügen Ihrer ersten Einkommens- oder Ausgabentransaktion"
+    }
+  }
+}

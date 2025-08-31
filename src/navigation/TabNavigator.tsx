@@ -2,6 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 import { useTheme } from '../theme';
 import { HomeScreen } from '../screens/HomeScreen';
 import { TransactionsScreen } from '../screens/TransactionsScreen';
@@ -11,6 +12,7 @@ import { SettingsScreen } from '../screens/SettingsScreen';
 const Tab = createBottomTabNavigator();
 
 export const TabNavigator: React.FC = () => {
+  const { t } = useTranslation();
   const { theme } = useTheme();
   const insets = useSafeAreaInsets();
 
@@ -60,28 +62,28 @@ export const TabNavigator: React.FC = () => {
         name='Home'
         component={HomeScreen}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: t('navigation.home'),
         }}
       />
       <Tab.Screen
         name='Transactions'
         component={TransactionsScreen}
         options={{
-          tabBarLabel: 'Transactions',
+          tabBarLabel: t('navigation.transactions'),
         }}
       />
       <Tab.Screen
         name='Statistics'
         component={StatsScreen}
         options={{
-          tabBarLabel: 'Stats',
+          tabBarLabel: t('navigation.stats'),
         }}
       />
       <Tab.Screen
         name='Settings'
         component={SettingsScreen}
         options={{
-          tabBarLabel: 'Settings',
+          tabBarLabel: t('navigation.settings'),
         }}
       />
     </Tab.Navigator>

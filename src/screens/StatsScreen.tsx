@@ -3,11 +3,13 @@ import { View, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 import { ThemedText, Card, Button } from '../components';
 import { useTheme } from '../theme';
 import { useTransactionsQuery } from '../hooks/useTransactionsQuery';
 
 export const StatsScreen: React.FC = () => {
+  const { t } = useTranslation();
   const { theme, isDark } = useTheme();
 
   const {
@@ -151,13 +153,13 @@ export const StatsScreen: React.FC = () => {
         <StatusBar style={isDark ? 'light' : 'dark'} />
         <SafeAreaView style={styles.header}>
           <ThemedText variant='h2' weight='700'>
-            Statistics
+            {t('stats.title')}
           </ThemedText>
         </SafeAreaView>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size='large' color={theme.colors.primary} />
           <ThemedText variant='body1' style={{ marginTop: theme.spacing.md }}>
-            Loading statistics...
+            {t('stats.loading')}
           </ThemedText>
         </View>
       </View>
@@ -170,7 +172,7 @@ export const StatsScreen: React.FC = () => {
         <StatusBar style={isDark ? 'light' : 'dark'} />
         <SafeAreaView style={styles.header}>
           <ThemedText variant='h2' weight='700'>
-            Statistics
+            {t('stats.title')}
           </ThemedText>
         </SafeAreaView>
         <View style={styles.errorContainer}>
@@ -180,14 +182,14 @@ export const StatsScreen: React.FC = () => {
             weight='600'
             style={{ marginTop: theme.spacing.md }}
           >
-            Connection Error
+            {t('stats.error.title')}
           </ThemedText>
           <ThemedText
             variant='body2'
             color='textSecondary'
             style={{ textAlign: 'center', marginVertical: theme.spacing.sm }}
           >
-            {error?.message || 'An error occurred'}
+            {error?.message || t('stats.error.message')}
           </ThemedText>
           <Button
             title='Retry'
@@ -223,14 +225,14 @@ export const StatsScreen: React.FC = () => {
               weight='600'
               style={{ marginTop: theme.spacing.md }}
             >
-              No Data Available
+              {t('stats.empty.title')}
             </ThemedText>
             <ThemedText
               variant='body2'
               color='textSecondary'
               style={{ textAlign: 'center', marginTop: theme.spacing.sm }}
             >
-              Add some transactions to see your statistics
+              {t('stats.empty.message')}
             </ThemedText>
           </View>
         ) : (
@@ -242,12 +244,12 @@ export const StatsScreen: React.FC = () => {
                 weight='600'
                 style={{ marginBottom: theme.spacing.md }}
               >
-                Overview
+                {t('stats.sections.overview')}
               </ThemedText>
               <View style={styles.statsRow}>
                 <View style={styles.statItem}>
                   <ThemedText variant='body2' color='textSecondary'>
-                    Total Balance
+                    {t('stats.labels.totalBalance')}
                   </ThemedText>
                   <ThemedText
                     variant='h3'
@@ -259,7 +261,7 @@ export const StatsScreen: React.FC = () => {
                 </View>
                 <View style={styles.statItem}>
                   <ThemedText variant='body2' color='textSecondary'>
-                    Transactions
+                    {t('stats.labels.transactions')}
                   </ThemedText>
                   <ThemedText variant='h3' weight='700' color='primary'>
                     {stats.transactionCount}
@@ -275,12 +277,12 @@ export const StatsScreen: React.FC = () => {
                 weight='600'
                 style={{ marginBottom: theme.spacing.md }}
               >
-                All Time
+                {t('stats.sections.allTime')}
               </ThemedText>
               <View style={styles.statsRow}>
                 <View style={styles.statItem}>
                   <ThemedText variant='body2' color='textSecondary'>
-                    Total Income
+                    {t('stats.labels.totalIncome')}
                   </ThemedText>
                   <ThemedText variant='h3' weight='700' color='income'>
                     ${stats.totalIncome.toFixed(2)}
@@ -288,7 +290,7 @@ export const StatsScreen: React.FC = () => {
                 </View>
                 <View style={styles.statItem}>
                   <ThemedText variant='body2' color='textSecondary'>
-                    Total Expenses
+                    {t('stats.labels.totalExpenses')}
                   </ThemedText>
                   <ThemedText variant='h3' weight='700' color='expense'>
                     ${stats.totalExpenses.toFixed(2)}
@@ -296,7 +298,7 @@ export const StatsScreen: React.FC = () => {
                 </View>
                 <View style={styles.statItem}>
                   <ThemedText variant='body2' color='textSecondary'>
-                    Avg Transaction
+                    {t('stats.labels.avgTransaction')}
                   </ThemedText>
                   <ThemedText variant='h3' weight='700' color='primary'>
                     ${stats.averageTransaction.toFixed(2)}
@@ -312,12 +314,12 @@ export const StatsScreen: React.FC = () => {
                 weight='600'
                 style={{ marginBottom: theme.spacing.md }}
               >
-                This Month
+                {t('stats.sections.thisMonth')}
               </ThemedText>
               <View style={styles.statsRow}>
                 <View style={styles.statItem}>
                   <ThemedText variant='body2' color='textSecondary'>
-                    Income
+                    {t('stats.labels.income')}
                   </ThemedText>
                   <ThemedText variant='h3' weight='700' color='income'>
                     ${stats.monthlyStats.income.toFixed(2)}
@@ -325,7 +327,7 @@ export const StatsScreen: React.FC = () => {
                 </View>
                 <View style={styles.statItem}>
                   <ThemedText variant='body2' color='textSecondary'>
-                    Expenses
+                    {t('stats.labels.expenses')}
                   </ThemedText>
                   <ThemedText variant='h3' weight='700' color='expense'>
                     ${stats.monthlyStats.expenses.toFixed(2)}
@@ -333,7 +335,7 @@ export const StatsScreen: React.FC = () => {
                 </View>
                 <View style={styles.statItem}>
                   <ThemedText variant='body2' color='textSecondary'>
-                    Transactions
+                    {t('stats.labels.transactions')}
                   </ThemedText>
                   <ThemedText variant='h3' weight='700' color='primary'>
                     {stats.monthlyStats.transactions}
@@ -352,7 +354,7 @@ export const StatsScreen: React.FC = () => {
                 weight='600'
                 style={{ marginBottom: theme.spacing.md }}
               >
-                Categories
+                {t('stats.sections.categories')}
               </ThemedText>
               {Object.entries(stats.categoryBreakdown).map(
                 ([category, amounts]) => (

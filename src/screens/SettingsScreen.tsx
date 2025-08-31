@@ -9,11 +9,15 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 import { ThemedText, Card } from '../components';
 import { useTheme } from '../theme';
+import { useLanguageSelector } from '../i18n/LanguageSelector';
 
 export const SettingsScreen: React.FC = () => {
+  const { t } = useTranslation();
   const { theme, themeType, setThemeType, isDark } = useTheme();
+  const { currentLanguage, showLanguageSelector } = useLanguageSelector();
 
   const toggleTheme = () => {
     const nextTheme = themeType === 'light' ? 'dark' : 'light';
@@ -22,25 +26,25 @@ export const SettingsScreen: React.FC = () => {
 
   const showAbout = () => {
     Alert.alert(
-      'About Finance Tracker',
-      'A simple and elegant finance tracking app built with React Native and TypeScript.\n\nVersion 1.0.0',
-      [{ text: 'OK' }]
+      t('settings.alerts.about.title'),
+      t('settings.alerts.about.message'),
+      [{ text: t('common.ok') }]
     );
   };
 
   const showDataInfo = () => {
     Alert.alert(
-      'Data Management',
-      'Your transaction data is stored locally and synced with our secure API. All data is encrypted and private.',
-      [{ text: 'OK' }]
+      t('settings.alerts.dataManagement.title'),
+      t('settings.alerts.dataManagement.message'),
+      [{ text: t('common.ok') }]
     );
   };
 
   const showSupport = () => {
     Alert.alert(
-      'Support',
-      'For support or feedback, please contact us at support@financetracker.com',
-      [{ text: 'OK' }]
+      t('settings.alerts.support.title'),
+      t('settings.alerts.support.message'),
+      [{ text: t('common.ok') }]
     );
   };
 
@@ -153,7 +157,7 @@ export const SettingsScreen: React.FC = () => {
 
       <SafeAreaView style={styles.header}>
         <ThemedText variant='h2' weight='700'>
-          Settings
+          {t('settings.title')}
         </ThemedText>
       </SafeAreaView>
 
@@ -163,8 +167,8 @@ export const SettingsScreen: React.FC = () => {
           <Card padding='none'>
             <SettingItem
               icon='color-palette'
-              title='Theme'
-              subtitle='Choose your preferred theme'
+              title={t('settings.items.theme.title')}
+              subtitle={t('settings.items.theme.subtitle')}
               onPress={toggleTheme}
               showArrow={false}
               isLast
@@ -182,7 +186,7 @@ export const SettingsScreen: React.FC = () => {
                     weight='600'
                     color={themeType === 'light' ? 'onPrimary' : 'text'}
                   >
-                    Light
+                    {t('settings.items.theme.light')}
                   </ThemedText>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -197,11 +201,24 @@ export const SettingsScreen: React.FC = () => {
                     weight='600'
                     color={themeType === 'dark' ? 'onPrimary' : 'text'}
                   >
-                    Dark
+                    {t('settings.items.theme.dark')}
                   </ThemedText>
                 </TouchableOpacity>
               </View>
             </SettingItem>
+          </Card>
+        </View>
+
+        {/* Language Section */}
+        <View style={styles.section}>
+          <Card padding='none'>
+            <SettingItem
+              icon='language'
+              title={t('settings.items.language.title')}
+              subtitle={`${t('settings.items.language.subtitle')} - ${currentLanguage.nativeName}`}
+              onPress={showLanguageSelector}
+              isLast
+            />
           </Card>
         </View>
 
@@ -210,8 +227,8 @@ export const SettingsScreen: React.FC = () => {
           <Card padding='none'>
             <SettingItem
               icon='server'
-              title='Data Management'
-              subtitle='Learn about how your data is handled'
+              title={t('settings.items.dataManagement.title')}
+              subtitle={t('settings.items.dataManagement.subtitle')}
               onPress={showDataInfo}
               isLast
             />
@@ -223,14 +240,14 @@ export const SettingsScreen: React.FC = () => {
           <Card padding='none'>
             <SettingItem
               icon='help-circle'
-              title='Help & Support'
-              subtitle='Get help or send feedback'
+              title={t('settings.items.helpSupport.title')}
+              subtitle={t('settings.items.helpSupport.subtitle')}
               onPress={showSupport}
             />
             <SettingItem
               icon='information-circle'
-              title='About'
-              subtitle='App version and information'
+              title={t('settings.items.about.title')}
+              subtitle={t('settings.items.about.subtitle')}
               onPress={showAbout}
               isLast
             />
@@ -244,14 +261,14 @@ export const SettingsScreen: React.FC = () => {
             color='textSecondary'
             style={{ textAlign: 'center' }}
           >
-            Finance Tracker v1.0.0
+            {t('settings.footer.version')}
           </ThemedText>
           <ThemedText
             variant='caption'
             color='textSecondary'
             style={{ textAlign: 'center', marginTop: theme.spacing.xs }}
           >
-            Built with React Native & TypeScript
+            {t('settings.footer.built')}
           </ThemedText>
         </View>
       </ScrollView>

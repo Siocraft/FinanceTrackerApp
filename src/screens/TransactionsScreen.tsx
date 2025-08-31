@@ -10,12 +10,14 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 import { ThemedText, TransactionCard, Button } from '../components';
 import { useTheme } from '../theme';
 import { useTransactionsQuery } from '../hooks/useTransactionsQuery';
 import { AddTransactionScreen } from './AddTransactionScreen';
 
 export const TransactionsScreen: React.FC = () => {
+  const { t } = useTranslation();
   const { theme, isDark } = useTheme();
   const [showAddTransaction, setShowAddTransaction] = useState(false);
 
@@ -98,14 +100,14 @@ export const TransactionsScreen: React.FC = () => {
         <SafeAreaView style={styles.header}>
           <View style={styles.headerRow}>
             <ThemedText variant='h2' weight='700'>
-              Transactions
+              {t('transactions.title')}
             </ThemedText>
           </View>
         </SafeAreaView>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size='large' color={theme.colors.primary} />
           <ThemedText variant='body1' style={{ marginTop: theme.spacing.md }}>
-            Loading transactions...
+            {t('transactions.loading')}
           </ThemedText>
         </View>
       </View>
@@ -119,7 +121,7 @@ export const TransactionsScreen: React.FC = () => {
         <SafeAreaView style={styles.header}>
           <View style={styles.headerRow}>
             <ThemedText variant='h2' weight='700'>
-              Transactions
+              {t('transactions.title')}
             </ThemedText>
           </View>
         </SafeAreaView>
@@ -130,14 +132,14 @@ export const TransactionsScreen: React.FC = () => {
             weight='600'
             style={{ marginTop: theme.spacing.md }}
           >
-            Connection Error
+            {t('transactions.error.title')}
           </ThemedText>
           <ThemedText
             variant='body2'
             color='textSecondary'
             style={{ textAlign: 'center', marginVertical: theme.spacing.sm }}
           >
-            {error?.message || 'An error occurred'}
+            {error?.message || t('transactions.error.message')}
           </ThemedText>
           <Button
             title='Retry'
@@ -176,14 +178,14 @@ export const TransactionsScreen: React.FC = () => {
                 weight='600'
                 style={{ marginTop: theme.spacing.md }}
               >
-                No Transactions Yet
+                {t('transactions.empty.title')}
               </ThemedText>
               <ThemedText
                 variant='body2'
                 color='textSecondary'
                 style={{ textAlign: 'center', marginTop: theme.spacing.sm }}
               >
-                Start by adding your first income or expense transaction
+                {t('transactions.empty.message')}
               </ThemedText>
             </View>
           ) : (

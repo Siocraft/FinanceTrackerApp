@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 import { ThemedText } from '../common/ThemedText';
 import { Button } from '../common/Button';
 import { useTheme } from '../../theme';
@@ -14,15 +15,18 @@ interface ErrorStateProps {
 }
 
 export const ErrorState: React.FC<ErrorStateProps> = ({
-  title = 'Connection Error',
+  title,
   message,
   error,
   onRetry,
 }) => {
+  const { t } = useTranslation();
   const { theme } = useTheme();
   const styles = createErrorStateStyles(theme);
 
-  const errorMessage = message || error?.message || 'An error occurred';
+  const errorTitle = title || t('states.error.connectionError');
+  const errorMessage =
+    message || error?.message || t('states.error.defaultMessage');
 
   return (
     <View style={styles.errorContainer}>
@@ -33,7 +37,7 @@ export const ErrorState: React.FC<ErrorStateProps> = ({
           weight='600'
           style={{ marginTop: theme.spacing.md }}
         >
-          {title}
+          {errorTitle}
         </ThemedText>
         <ThemedText
           variant='body2'
@@ -44,7 +48,7 @@ export const ErrorState: React.FC<ErrorStateProps> = ({
         </ThemedText>
         {onRetry && (
           <Button
-            title='Retry'
+            title={t('common.retry')}
             onPress={onRetry}
             variant='primary'
             style={{ marginTop: theme.spacing.md }}

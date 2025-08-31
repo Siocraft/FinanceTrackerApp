@@ -1,0 +1,189 @@
+{
+  "navigation": {
+    "home": "Home",
+    "transactions": "Transactions",
+    "statistics": "Statistics",
+    "stats": "Stats",
+    "settings": "Settings"
+  },
+  "common": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "save": "Save",
+    "retry": "Retry",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "income": "Income",
+    "expenses": "Expenses",
+    "expense": "Expense",
+    "amount": "Amount",
+    "description": "Description",
+    "category": "Category"
+  },
+  "header": {
+    "title": "Finance Tracker",
+    "subtitle": "Welcome back!"
+  },
+  "balance": {
+    "totalBalance": "Total Balance",
+    "income": "Income",
+    "expenses": "Expenses"
+  },
+  "monthlyStats": {
+    "title": "This Month",
+    "transactions": "Transactions",
+    "avgDaily": "Avg/Day",
+    "savings": "Savings"
+  },
+  "quickActions": {
+    "addIncome": "Add Income",
+    "addExpense": "Add Expense"
+  },
+  "transactionsList": {
+    "recentTransactions": "Recent Transactions",
+    "showLess": "Show Less",
+    "seeAll": "See All"
+  },
+  "home": {
+    "addNewTransaction": "Add New Transaction"
+  },
+  "addTransaction": {
+    "title": "Add Transaction",
+    "transactionType": "Transaction Type *",
+    "amount": "Amount *",
+    "description": "Description *",
+    "category": "Category *",
+    "income": "Income",
+    "expense": "Expense",
+    "placeholders": {
+      "amount": "0.00",
+      "description": "Enter description..."
+    },
+    "categories": {
+      "income": {
+        "salary": "Salary",
+        "freelance": "Freelance",
+        "investment": "Investment",
+        "gift": "Gift",
+        "other": "Other"
+      },
+      "expense": {
+        "food": "Food",
+        "transport": "Transport",
+        "shopping": "Shopping",
+        "entertainment": "Entertainment",
+        "bills": "Bills",
+        "health": "Health",
+        "other": "Other"
+      }
+    },
+    "buttons": {
+      "addTransaction": "Add Transaction",
+      "adding": "Adding..."
+    },
+    "messages": {
+      "fillRequired": "Please fill in all required fields",
+      "validAmount": "Please enter a valid amount",
+      "success": "Transaction added successfully",
+      "failed": "Failed to add transaction"
+    }
+  },
+  "transactions": {
+    "title": "Transactions",
+    "loading": "Loading transactions...",
+    "error": {
+      "title": "Connection Error",
+      "message": "An error occurred"
+    },
+    "empty": {
+      "title": "No Transactions Yet",
+      "message": "Start by adding your first income or expense transaction"
+    }
+  },
+  "stats": {
+    "title": "Statistics",
+    "loading": "Loading statistics...",
+    "error": {
+      "title": "Connection Error",
+      "message": "An error occurred"
+    },
+    "empty": {
+      "title": "No Data Available",
+      "message": "Add some transactions to see your statistics"
+    },
+    "sections": {
+      "overview": "Overview",
+      "allTime": "All Time",
+      "thisMonth": "This Month",
+      "categories": "Categories"
+    },
+    "labels": {
+      "totalBalance": "Total Balance",
+      "transactions": "Transactions",
+      "totalIncome": "Total Income",
+      "totalExpenses": "Total Expenses",
+      "avgTransaction": "Avg Transaction",
+      "income": "Income",
+      "expenses": "Expenses"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "items": {
+      "theme": {
+        "title": "Theme",
+        "subtitle": "Choose your preferred theme",
+        "light": "Light",
+        "dark": "Dark"
+      },
+      "language": {
+        "title": "Language",
+        "subtitle": "Choose your preferred language"
+      },
+      "dataManagement": {
+        "title": "Data Management",
+        "subtitle": "Learn about how your data is handled"
+      },
+      "helpSupport": {
+        "title": "Help & Support",
+        "subtitle": "Get help or send feedback"
+      },
+      "about": {
+        "title": "About",
+        "subtitle": "App version and information"
+      }
+    },
+    "footer": {
+      "version": "Finance Tracker v1.0.0",
+      "built": "Built with React Native & TypeScript"
+    },
+    "alerts": {
+      "about": {
+        "title": "About Finance Tracker",
+        "message": "A simple and elegant finance tracking app built with React Native and TypeScript.\\n\\nVersion 1.0.0"
+      },
+      "dataManagement": {
+        "title": "Data Management",
+        "message": "Your transaction data is stored locally and synced with our secure API. All data is encrypted and private."
+      },
+      "support": {
+        "title": "Support",
+        "message": "For support or feedback, please contact us at support@financetracker.com"
+      }
+    }
+  },
+  "states": {
+    "loading": {
+      "default": "Loading your transactions..."
+    },
+    "error": {
+      "connectionError": "Connection Error",
+      "defaultMessage": "An error occurred"
+    },
+    "empty": {
+      "noTransactions": "No Transactions Yet",
+      "startAdding": "Start by adding your first income or expense transaction"
+    }
+  }
+}
