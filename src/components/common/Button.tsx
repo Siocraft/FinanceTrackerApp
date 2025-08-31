@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useTheme } from '../theme';
+import { useTheme } from '../../theme';
 
 interface ButtonProps {
   title: string;

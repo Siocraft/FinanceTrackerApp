@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, TextProps, TextStyle } from 'react-native';
-import { useTheme } from '../theme';
+import { useTheme } from '../../theme';
 
 interface ThemedTextProps extends TextProps {
   variant?: 'h1' | 'h2' | 'h3' | 'body1' | 'body2' | 'caption' | 'button';

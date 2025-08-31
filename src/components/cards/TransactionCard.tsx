@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Card } from './Card';
-import { ThemedText } from './ThemedText';
-import { useTheme } from '../theme';
-import { Transaction, TransactionType } from '../types';
+import { Card } from '../common/Card';
+import { ThemedText } from '../common/ThemedText';
+import { useTheme } from '../../theme';
+import { Transaction, TransactionType } from '../../types';
+import { createTransactionCardStyles } from './TransactionCard.styles';
 
 interface TransactionCardProps {
   transaction: Transaction;
@@ -53,43 +54,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
     });
   };
 
-  const styles = StyleSheet.create({
-    container: {
-      marginVertical: theme.spacing.xs,
-    },
-    content: {
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    iconContainer: {
-      width: 48,
-      height: 48,
-      borderRadius: theme.borderRadius.md,
-      backgroundColor: transaction.type === 'income' 
-        ? `${theme.colors.income}20` 
-        : `${theme.colors.expense}20`,
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginRight: theme.spacing.md,
-    },
-    textContainer: {
-      flex: 1,
-    },
-    titleRow: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: theme.spacing.xs,
-    },
-    categoryRow: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-    },
-    amountContainer: {
-      alignItems: 'flex-end',
-    },
-  });
+  const styles = createTransactionCardStyles(theme);
 
   const CardComponent = onPress ? TouchableOpacity : View;
 
@@ -101,7 +66,14 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
     >
       <Card padding="medium">
         <View style={styles.content}>
-          <View style={styles.iconContainer}>
+          <View style={[
+            styles.iconContainer,
+            {
+              backgroundColor: transaction.type === 'income' 
+                ? `${theme.colors.income}20` 
+                : `${theme.colors.expense}20`
+            }
+          ]}>
             <Ionicons
               name={getCategoryIcon(transaction.category, transaction.type)}
               size={24}
