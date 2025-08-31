@@ -1,5 +1,15 @@
-import { AppTheme, ThemeSpacing, ThemeBorderRadius, ThemeTypography } from '../types/theme';
-import { darkColors, lightColors, darkGradients, lightGradients } from './colors';
+import {
+  AppTheme,
+  ThemeSpacing,
+  ThemeBorderRadius,
+  ThemeTypography,
+} from '../types/theme';
+import {
+  darkColors,
+  lightColors,
+  darkGradients,
+  lightGradients,
+} from './colors';
 
 // Spacing configuration
 export const spacing: ThemeSpacing = {

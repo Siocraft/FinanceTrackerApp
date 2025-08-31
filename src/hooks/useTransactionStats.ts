@@ -10,7 +10,9 @@ interface TransactionStats {
   avgDaily: number;
 }
 
-export const useTransactionStats = (transactions: Transaction[]): TransactionStats => {
+export const useTransactionStats = (
+  transactions: Transaction[]
+): TransactionStats => {
   return useMemo(() => {
     // Handle loading or empty state
     if (!transactions || transactions.length === 0) {
@@ -27,11 +29,13 @@ export const useTransactionStats = (transactions: Transaction[]): TransactionSta
     const now = new Date();
     const currentMonth = now.getMonth();
     const currentYear = now.getFullYear();
-    
+
     const currentMonthTransactions = transactions.filter(transaction => {
       const transactionDate = new Date(transaction.date);
-      return transactionDate.getMonth() === currentMonth && 
-             transactionDate.getFullYear() === currentYear;
+      return (
+        transactionDate.getMonth() === currentMonth &&
+        transactionDate.getFullYear() === currentYear
+      );
     });
 
     const monthlyIncome = currentMonthTransactions
@@ -42,12 +46,15 @@ export const useTransactionStats = (transactions: Transaction[]): TransactionSta
       .filter(t => t.type === 'expense')
       .reduce((sum, t) => sum + t.amount, 0);
 
-    const totalBalance = transactions
-      .reduce((sum, t) => sum + (t.type === 'income' ? t.amount : -t.amount), 0);
+    const totalBalance = transactions.reduce(
+      (sum, t) => sum + (t.type === 'income' ? t.amount : -t.amount),
+      0
+    );
 
-    const avgDaily = currentMonthTransactions.length > 0 
-      ? (monthlyIncome + monthlyExpenses) / now.getDate()
-      : 0;
+    const avgDaily =
+      currentMonthTransactions.length > 0
+        ? (monthlyIncome + monthlyExpenses) / now.getDate()
+        : 0;
 
     return {
       totalBalance,

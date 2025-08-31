@@ -9,10 +9,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
-import {
-  ThemedText,
-  Card,
-} from '../components';
+import { ThemedText, Card } from '../components';
 import { useTheme } from '../theme';
 
 export const SettingsScreen: React.FC = () => {
@@ -81,9 +78,7 @@ export const SettingsScreen: React.FC = () => {
     settingTitle: {
       marginBottom: theme.spacing.xs,
     },
-    settingValue: {
-      marginLeft: 'auto',
-    },
+
     themeToggle: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -111,34 +106,42 @@ export const SettingsScreen: React.FC = () => {
     showArrow?: boolean;
     children?: React.ReactNode;
     isLast?: boolean;
-  }> = ({ icon, title, subtitle, onPress, showArrow = true, children, isLast = false }) => (
-    <TouchableOpacity 
-      style={[styles.settingItem, isLast && styles.lastItem]} 
+  }> = ({
+    icon,
+    title,
+    subtitle,
+    onPress,
+    showArrow = true,
+    children,
+    isLast = false,
+  }) => (
+    <TouchableOpacity
+      style={[styles.settingItem, isLast && styles.lastItem]}
       onPress={onPress}
       activeOpacity={0.7}
     >
-      <Ionicons 
-        name={icon as any} 
-        size={24} 
-        color={theme.colors.primary} 
+      <Ionicons
+        name={icon as any}
+        size={24}
+        color={theme.colors.primary}
         style={styles.settingIcon}
       />
       <View style={styles.settingContent}>
-        <ThemedText variant="body1" weight="600" style={styles.settingTitle}>
+        <ThemedText variant='body1' weight='600' style={styles.settingTitle}>
           {title}
         </ThemedText>
         {subtitle && (
-          <ThemedText variant="body2" color="textSecondary">
+          <ThemedText variant='body2' color='textSecondary'>
             {subtitle}
           </ThemedText>
         )}
       </View>
       {children}
       {showArrow && (
-        <Ionicons 
-          name="chevron-forward" 
-          size={20} 
-          color={theme.colors.textSecondary} 
+        <Ionicons
+          name='chevron-forward'
+          size={20}
+          color={theme.colors.textSecondary}
         />
       )}
     </TouchableOpacity>
@@ -147,9 +150,9 @@ export const SettingsScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <StatusBar style={isDark ? 'light' : 'dark'} />
-      
+
       <SafeAreaView style={styles.header}>
-        <ThemedText variant="h2" weight="700">
+        <ThemedText variant='h2' weight='700'>
           Settings
         </ThemedText>
       </SafeAreaView>
@@ -157,41 +160,41 @@ export const SettingsScreen: React.FC = () => {
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* Appearance Section */}
         <View style={styles.section}>
-          <Card padding="none">
+          <Card padding='none'>
             <SettingItem
-              icon="color-palette"
-              title="Theme"
-              subtitle="Choose your preferred theme"
+              icon='color-palette'
+              title='Theme'
+              subtitle='Choose your preferred theme'
               onPress={toggleTheme}
               showArrow={false}
               isLast
             >
               <View style={styles.themeToggle}>
-                <TouchableOpacity 
+                <TouchableOpacity
                   style={[
                     styles.themeOption,
-                    themeType === 'light' && styles.themeOptionActive
+                    themeType === 'light' && styles.themeOptionActive,
                   ]}
                   onPress={() => setThemeType('light')}
                 >
-                  <ThemedText 
-                    variant="body2" 
-                    weight="600"
+                  <ThemedText
+                    variant='body2'
+                    weight='600'
                     color={themeType === 'light' ? 'onPrimary' : 'text'}
                   >
                     Light
                   </ThemedText>
                 </TouchableOpacity>
-                <TouchableOpacity 
+                <TouchableOpacity
                   style={[
                     styles.themeOption,
-                    themeType === 'dark' && styles.themeOptionActive
+                    themeType === 'dark' && styles.themeOptionActive,
                   ]}
                   onPress={() => setThemeType('dark')}
                 >
-                  <ThemedText 
-                    variant="body2" 
-                    weight="600"
+                  <ThemedText
+                    variant='body2'
+                    weight='600'
                     color={themeType === 'dark' ? 'onPrimary' : 'text'}
                   >
                     Dark
@@ -204,11 +207,11 @@ export const SettingsScreen: React.FC = () => {
 
         {/* Data Section */}
         <View style={styles.section}>
-          <Card padding="none">
+          <Card padding='none'>
             <SettingItem
-              icon="server"
-              title="Data Management"
-              subtitle="Learn about how your data is handled"
+              icon='server'
+              title='Data Management'
+              subtitle='Learn about how your data is handled'
               onPress={showDataInfo}
               isLast
             />
@@ -217,17 +220,17 @@ export const SettingsScreen: React.FC = () => {
 
         {/* Support Section */}
         <View style={styles.section}>
-          <Card padding="none">
+          <Card padding='none'>
             <SettingItem
-              icon="help-circle"
-              title="Help & Support"
-              subtitle="Get help or send feedback"
+              icon='help-circle'
+              title='Help & Support'
+              subtitle='Get help or send feedback'
               onPress={showSupport}
             />
             <SettingItem
-              icon="information-circle"
-              title="About"
-              subtitle="App version and information"
+              icon='information-circle'
+              title='About'
+              subtitle='App version and information'
               onPress={showAbout}
               isLast
             />
@@ -236,16 +239,16 @@ export const SettingsScreen: React.FC = () => {
 
         {/* Version Info */}
         <View style={[styles.section, { marginBottom: theme.spacing.xl }]}>
-          <ThemedText 
-            variant="body2" 
-            color="textSecondary" 
+          <ThemedText
+            variant='body2'
+            color='textSecondary'
             style={{ textAlign: 'center' }}
           >
             Finance Tracker v1.0.0
           </ThemedText>
-          <ThemedText 
-            variant="caption" 
-            color="textSecondary" 
+          <ThemedText
+            variant='caption'
+            color='textSecondary'
             style={{ textAlign: 'center', marginTop: theme.spacing.xs }}
           >
             Built with React Native & TypeScript

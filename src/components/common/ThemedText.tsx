@@ -4,9 +4,31 @@ import { useTheme } from '../../theme';
 
 interface ThemedTextProps extends TextProps {
   variant?: 'h1' | 'h2' | 'h3' | 'body1' | 'body2' | 'caption' | 'button';
-  color?: 'primary' | 'secondary' | 'text' | 'textSecondary' | 'error' | 'success' | 'warning' | 'info' | 'income' | 'expense' | 'onPrimary';
+  color?:
+    | 'primary'
+    | 'secondary'
+    | 'text'
+    | 'textSecondary'
+    | 'error'
+    | 'success'
+    | 'warning'
+    | 'info'
+    | 'income'
+    | 'expense'
+    | 'onPrimary';
   align?: 'left' | 'center' | 'right';
-  weight?: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900';
+  weight?:
+    | 'normal'
+    | 'bold'
+    | '100'
+    | '200'
+    | '300'
+    | '400'
+    | '500'
+    | '600'
+    | '700'
+    | '800'
+    | '900';
 }
 
 export const ThemedText: React.FC<ThemedTextProps> = ({

@@ -25,16 +25,19 @@ const createApiClient = (): AxiosInstance => {
 
   // Request interceptor for logging
   client.interceptors.request.use(
-    (config) => {
+    config => {
       if (env.DEBUG) {
-        console.log(`🚀 API Request: ${config.method?.toUpperCase()} ${config.url}`, {
-          params: config.params,
-          data: config.data,
-        });
+        console.log(
+          `🚀 API Request: ${config.method?.toUpperCase()} ${config.url}`,
+          {
+            params: config.params,
+            data: config.data,
+          }
+        );
       }
       return config;
     },
-    (error) => {
+    error => {
       if (env.DEBUG) {
         console.error('🚨 API Request Error:', error);
       }
@@ -46,10 +49,13 @@ const createApiClient = (): AxiosInstance => {
   client.interceptors.response.use(
     (response: AxiosResponse) => {
       if (env.DEBUG) {
-        console.log(`✅ API Response: ${response.config.method?.toUpperCase()} ${response.config.url}`, {
-          status: response.status,
-          data: response.data,
-        });
+        console.log(
+          `✅ API Response: ${response.config.method?.toUpperCase()} ${response.config.url}`,
+          {
+            status: response.status,
+            data: response.data,
+          }
+        );
       }
       return response;
     },
@@ -67,9 +73,10 @@ const createApiClient = (): AxiosInstance => {
       if (error.response) {
         // Server responded with error status
         const errorData = error.response.data as any;
-        const message = errorData?.error || 
-                       errorData?.message || 
-                       `HTTP ${error.response.status}`;
+        const message =
+          errorData?.error ||
+          errorData?.message ||
+          `HTTP ${error.response.status}`;
         throw new ApiError(error.response.status, message, error.response.data);
       } else if (error.request) {
         // Network error
@@ -89,18 +96,18 @@ export const apiClient = createApiClient();
 
 // Helper function to handle common API patterns
 export const apiRequest = {
-  get: <T>(url: string, params?: any): Promise<T> => 
+  get: <T>(url: string, params?: any): Promise<T> =>
     apiClient.get(url, { params }).then(response => response.data),
-  
-  post: <T>(url: string, data?: any): Promise<T> => 
+
+  post: <T>(url: string, data?: any): Promise<T> =>
     apiClient.post(url, data).then(response => response.data),
-  
-  put: <T>(url: string, data?: any): Promise<T> => 
+
+  put: <T>(url: string, data?: any): Promise<T> =>
     apiClient.put(url, data).then(response => response.data),
-  
-  delete: <T>(url: string): Promise<T> => 
+
+  delete: <T>(url: string): Promise<T> =>
     apiClient.delete(url).then(response => response.data),
-  
-  patch: <T>(url: string, data?: any): Promise<T> => 
+
+  patch: <T>(url: string, data?: any): Promise<T> =>
     apiClient.patch(url, data).then(response => response.data),
 };

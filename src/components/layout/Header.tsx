@@ -26,15 +26,18 @@ export const Header: React.FC<HeaderProps> = ({
       <SafeAreaView>
         <View style={styles.headerRow}>
           <View>
-            <ThemedText variant="body2" color="textSecondary">
+            <ThemedText variant='body2' color='textSecondary'>
               {subtitle}
             </ThemedText>
-            <ThemedText variant="h2" weight="700">
+            <ThemedText variant='h2' weight='700'>
               {title}
             </ThemedText>
           </View>
           {onThemeToggle && (
-            <TouchableOpacity style={styles.themeButton} onPress={onThemeToggle}>
+            <TouchableOpacity
+              style={styles.themeButton}
+              onPress={onThemeToggle}
+            >
               <Ionicons
                 name={isDark ? 'sunny' : 'moon'}
                 size={20}

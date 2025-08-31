@@ -15,14 +15,18 @@ const createQueryClient = () => {
         // Retry failed requests
         retry: (failureCount, error: Error) => {
           // Don't retry on 4xx errors (client errors)
-          if (error instanceof ApiError && error.status >= 400 && error.status < 500) {
+          if (
+            error instanceof ApiError &&
+            error.status >= 400 &&
+            error.status < 500
+          ) {
             return false;
           }
           // Retry up to 3 times for other errors
           return failureCount < 3;
         },
         // Retry delay with exponential backoff
-        retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+        retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
         // Refetch on window focus in development only
         refetchOnWindowFocus: env.DEBUG,
         // Refetch on reconnect
@@ -32,14 +36,18 @@ const createQueryClient = () => {
         // Retry failed mutations
         retry: (failureCount, error: Error) => {
           // Don't retry on 4xx errors (client errors)
-          if (error instanceof ApiError && error.status >= 400 && error.status < 500) {
+          if (
+            error instanceof ApiError &&
+            error.status >= 400 &&
+            error.status < 500
+          ) {
             return false;
           }
           // Retry up to 2 times for mutations
           return failureCount < 2;
         },
         // Retry delay for mutations
-        retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 10000),
+        retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 10000),
       },
     },
   });
@@ -51,7 +59,7 @@ const queryClient = createQueryClient();
 // Development tools
 if (env.DEBUG) {
   // Log query client events
-  queryClient.getQueryCache().subscribe((event) => {
+  queryClient.getQueryCache().subscribe(event => {
     console.log('🔍 Query Cache Event:', {
       type: event.type,
       queryKey: event.query?.queryKey,
@@ -59,7 +67,7 @@ if (env.DEBUG) {
     });
   });
 
-  queryClient.getMutationCache().subscribe((event) => {
+  queryClient.getMutationCache().subscribe(event => {
     console.log('🔄 Mutation Cache Event:', {
       type: event.type,
       mutationKey: event.mutation?.options.mutationKey,
@@ -74,9 +82,7 @@ interface QueryProviderProps {
 
 export const QueryProvider: React.FC<QueryProviderProps> = ({ children }) => {
   return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-    </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );
 };
 

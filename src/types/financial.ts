@@ -1,13 +1,13 @@
 export type TransactionType = 'income' | 'expense';
 
-export type IncomeCategory = 
+export type IncomeCategory =
   | 'salary'
   | 'freelance'
   | 'investment'
   | 'gift'
   | 'other_income';
 
-export type ExpenseCategory = 
+export type ExpenseCategory =
   | 'food'
   | 'transport'
   | 'shopping'

@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  ScrollView,
-  Modal,
-} from 'react-native';
+import { View, ScrollView, Modal } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import {
   Header,
@@ -25,13 +21,13 @@ export const HomeScreen: React.FC = () => {
   const { isDark, themeType, setThemeType, theme } = useTheme();
   const [showAllTransactions, setShowAllTransactions] = useState(false);
   const [showAddTransaction, setShowAddTransaction] = useState(false);
-  
+
   // Use React Query for API data
-  const { 
-    data: transactions = [], 
-    isLoading: loading, 
-    error, 
-    refetch: refresh 
+  const {
+    data: transactions = [],
+    isLoading: loading,
+    error,
+    refetch: refresh,
   } = useTransactionsQuery({
     pagination: showAllTransactions ? {} : { limit: 3 },
   });
@@ -71,8 +67,8 @@ export const HomeScreen: React.FC = () => {
   if (loading) {
     return (
       <View style={styles.container}>
-        <StatusBar 
-          style={isDark ? 'light' : 'dark'} 
+        <StatusBar
+          style={isDark ? 'light' : 'dark'}
           backgroundColor={theme.colors.background}
         />
         <Header onThemeToggle={toggleTheme} />
@@ -95,11 +91,11 @@ export const HomeScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <StatusBar style={isDark ? 'light' : 'dark'} />
-      
+
       <Header onThemeToggle={toggleTheme} />
 
-      <ScrollView 
-        style={styles.content} 
+      <ScrollView
+        style={styles.content}
         contentContainerStyle={{ backgroundColor: theme.colors.background }}
         showsVerticalScrollIndicator={false}
       >
@@ -130,9 +126,9 @@ export const HomeScreen: React.FC = () => {
 
         {/* Add Transaction Button */}
         <Button
-          title="Add New Transaction"
+          title='Add New Transaction'
           onPress={handleAddTransaction}
-          variant="outline"
+          variant='outline'
           style={{ marginBottom: 32 }}
         />
       </ScrollView>
@@ -140,8 +136,8 @@ export const HomeScreen: React.FC = () => {
       {/* Add Transaction Modal */}
       <Modal
         visible={showAddTransaction}
-        animationType="slide"
-        presentationStyle="pageSheet"
+        animationType='slide'
+        presentationStyle='pageSheet'
       >
         <AddTransactionScreen
           onClose={() => setShowAddTransaction(false)}

@@ -16,8 +16,8 @@ export const LoadingState: React.FC<LoadingStateProps> = ({
 
   return (
     <View style={styles.loadingContainer}>
-      <ActivityIndicator size="large" color={theme.colors.primary} />
-      <ThemedText variant="body1" style={{ marginTop: theme.spacing.md }}>
+      <ActivityIndicator size='large' color={theme.colors.primary} />
+      <ThemedText variant='body1' style={{ marginTop: theme.spacing.md }}>
         {message}
       </ThemedText>
     </View>

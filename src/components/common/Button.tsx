@@ -2,7 +2,6 @@ import React from 'react';
 import {
   TouchableOpacity,
   Text,
-  StyleSheet,
   ViewStyle,
   TextStyle,
   ActivityIndicator,
@@ -65,10 +64,14 @@ export const Button: React.FC<ButtonProps> = ({
     // Variant styles
     const variantStyles = {
       primary: {
-        backgroundColor: disabled ? theme.colors.disabled : theme.colors.primary,
+        backgroundColor: disabled
+          ? theme.colors.disabled
+          : theme.colors.primary,
       },
       secondary: {
-        backgroundColor: disabled ? theme.colors.disabled : theme.colors.secondary,
+        backgroundColor: disabled
+          ? theme.colors.disabled
+          : theme.colors.secondary,
       },
       outline: {
         backgroundColor: 'transparent',
@@ -123,7 +126,7 @@ export const Button: React.FC<ButtonProps> = ({
     <>
       {loading && (
         <ActivityIndicator
-          size="small"
+          size='small'
           color={buttonTextStyle.color}
           style={{ marginRight: theme.spacing.sm }}
         />
@@ -133,9 +136,10 @@ export const Button: React.FC<ButtonProps> = ({
   );
 
   if (gradient && (variant === 'primary' || variant === 'secondary')) {
-    const gradientColors = variant === 'primary' 
-      ? theme.gradients.primary 
-      : theme.gradients.secondary;
+    const gradientColors =
+      variant === 'primary'
+        ? theme.gradients.primary
+        : theme.gradients.secondary;
 
     return (
       <TouchableOpacity

@@ -10,11 +10,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
-import {
-  ThemedText,
-  Button,
-  Card,
-} from '../components';
+import { ThemedText, Button } from '../components';
 import { useTheme } from '../theme';
 import { TransactionType, CreateTransactionDto } from '../types';
 import { useCreateTransactionMutation } from '../hooks/useTransactionsQuery';
@@ -30,7 +26,7 @@ export const AddTransactionScreen: React.FC<AddTransactionScreenProps> = ({
 }) => {
   const { theme, isDark } = useTheme();
   const createTransactionMutation = useCreateTransactionMutation();
-  
+
   const [formData, setFormData] = useState({
     amount: '',
     description: '',
@@ -41,7 +37,15 @@ export const AddTransactionScreen: React.FC<AddTransactionScreenProps> = ({
 
   const commonCategories = {
     income: ['Salary', 'Freelance', 'Investment', 'Gift', 'Other'],
-    expense: ['Food', 'Transport', 'Shopping', 'Entertainment', 'Bills', 'Health', 'Other'],
+    expense: [
+      'Food',
+      'Transport',
+      'Shopping',
+      'Entertainment',
+      'Bills',
+      'Health',
+      'Other',
+    ],
   };
 
   const handleSubmit = async () => {
@@ -138,13 +142,13 @@ export const AddTransactionScreen: React.FC<AddTransactionScreenProps> = ({
   return (
     <View style={styles.container}>
       <StatusBar style={isDark ? 'light' : 'dark'} />
-      
+
       <SafeAreaView>
         <View style={styles.header}>
           <TouchableOpacity onPress={onClose}>
-            <Ionicons name="close" size={24} color={theme.colors.text} />
+            <Ionicons name='close' size={24} color={theme.colors.text} />
           </TouchableOpacity>
-          <ThemedText variant="h3" weight="600">
+          <ThemedText variant='h3' weight='600'>
             Add Transaction
           </ThemedText>
           <View style={{ width: 24 }} />
@@ -154,7 +158,7 @@ export const AddTransactionScreen: React.FC<AddTransactionScreenProps> = ({
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* Type Selection */}
         <View style={styles.section}>
-          <ThemedText variant="body1" weight="600" style={styles.label}>
+          <ThemedText variant='body1' weight='600' style={styles.label}>
             Transaction Type *
           </ThemedText>
           <View style={styles.typeSelector}>
@@ -162,15 +166,23 @@ export const AddTransactionScreen: React.FC<AddTransactionScreenProps> = ({
               style={[
                 styles.typeButton,
                 {
-                  borderColor: formData.type === 'income' ? theme.colors.income : theme.colors.border,
-                  backgroundColor: formData.type === 'income' ? `${theme.colors.income}20` : 'transparent',
+                  borderColor:
+                    formData.type === 'income'
+                      ? theme.colors.income
+                      : theme.colors.border,
+                  backgroundColor:
+                    formData.type === 'income'
+                      ? `${theme.colors.income}20`
+                      : 'transparent',
                 },
               ]}
-              onPress={() => setFormData({ ...formData, type: 'income', category: '' })}
+              onPress={() =>
+                setFormData({ ...formData, type: 'income', category: '' })
+              }
             >
               <ThemedText
-                variant="body2"
-                weight="600"
+                variant='body2'
+                weight='600'
                 color={formData.type === 'income' ? 'income' : 'text'}
               >
                 Income
@@ -180,15 +192,23 @@ export const AddTransactionScreen: React.FC<AddTransactionScreenProps> = ({
               style={[
                 styles.typeButton,
                 {
-                  borderColor: formData.type === 'expense' ? theme.colors.expense : theme.colors.border,
-                  backgroundColor: formData.type === 'expense' ? `${theme.colors.expense}20` : 'transparent',
+                  borderColor:
+                    formData.type === 'expense'
+                      ? theme.colors.expense
+                      : theme.colors.border,
+                  backgroundColor:
+                    formData.type === 'expense'
+                      ? `${theme.colors.expense}20`
+                      : 'transparent',
                 },
               ]}
-              onPress={() => setFormData({ ...formData, type: 'expense', category: '' })}
+              onPress={() =>
+                setFormData({ ...formData, type: 'expense', category: '' })
+              }
             >
               <ThemedText
-                variant="body2"
-                weight="600"
+                variant='body2'
+                weight='600'
                 color={formData.type === 'expense' ? 'expense' : 'text'}
               >
                 Expense
@@ -199,57 +219,61 @@ export const AddTransactionScreen: React.FC<AddTransactionScreenProps> = ({
 
         {/* Amount */}
         <View style={styles.section}>
-          <ThemedText variant="body1" weight="600" style={styles.label}>
+          <ThemedText variant='body1' weight='600' style={styles.label}>
             Amount *
           </ThemedText>
           <TextInput
             style={styles.input}
-            placeholder="0.00"
+            placeholder='0.00'
             placeholderTextColor={theme.colors.textSecondary}
             value={formData.amount}
-            onChangeText={(text) => setFormData({ ...formData, amount: text })}
-            keyboardType="numeric"
+            onChangeText={text => setFormData({ ...formData, amount: text })}
+            keyboardType='numeric'
           />
         </View>
 
         {/* Description */}
         <View style={styles.section}>
-          <ThemedText variant="body1" weight="600" style={styles.label}>
+          <ThemedText variant='body1' weight='600' style={styles.label}>
             Description *
           </ThemedText>
           <TextInput
             style={styles.input}
-            placeholder="Enter description..."
+            placeholder='Enter description...'
             placeholderTextColor={theme.colors.textSecondary}
             value={formData.description}
-            onChangeText={(text) => setFormData({ ...formData, description: text })}
+            onChangeText={text =>
+              setFormData({ ...formData, description: text })
+            }
           />
         </View>
 
         {/* Category */}
         <View style={styles.section}>
-          <ThemedText variant="body1" weight="600" style={styles.label}>
+          <ThemedText variant='body1' weight='600' style={styles.label}>
             Category *
           </ThemedText>
           <View style={styles.categoryGrid}>
-            {commonCategories[formData.type].map((category) => (
+            {commonCategories[formData.type].map(category => (
               <TouchableOpacity
                 key={category}
                 style={[
                   styles.categoryButton,
                   {
-                    borderColor: formData.category === category 
-                      ? theme.colors.primary 
-                      : theme.colors.border,
-                    backgroundColor: formData.category === category 
-                      ? `${theme.colors.primary}20` 
-                      : 'transparent',
+                    borderColor:
+                      formData.category === category
+                        ? theme.colors.primary
+                        : theme.colors.border,
+                    backgroundColor:
+                      formData.category === category
+                        ? `${theme.colors.primary}20`
+                        : 'transparent',
                   },
                 ]}
                 onPress={() => setFormData({ ...formData, category })}
               >
                 <ThemedText
-                  variant="body2"
+                  variant='body2'
                   color={formData.category === category ? 'primary' : 'text'}
                 >
                   {category}
@@ -264,9 +288,12 @@ export const AddTransactionScreen: React.FC<AddTransactionScreenProps> = ({
           title={loading ? 'Adding...' : 'Add Transaction'}
           onPress={handleSubmit}
           disabled={loading}
-          variant="primary"
+          variant='primary'
           gradient={true}
-          style={{ marginTop: theme.spacing.lg, marginBottom: theme.spacing.xl }}
+          style={{
+            marginTop: theme.spacing.lg,
+            marginBottom: theme.spacing.xl,
+          }}
         />
       </ScrollView>
     </View>

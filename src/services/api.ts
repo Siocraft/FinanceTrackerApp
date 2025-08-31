@@ -1,4 +1,8 @@
-import { Transaction, CreateTransactionDto, UpdateTransactionDto } from '../types/financial';
+import {
+  Transaction,
+  CreateTransactionDto,
+  UpdateTransactionDto,
+} from '../types/financial';
 import { apiRequest, ApiError } from './apiClient';
 
 interface PaginationMeta {
@@ -23,7 +27,6 @@ interface PaginationParams {
 }
 
 class ApiService {
-
   // Health check
   async healthCheck(): Promise<{ status: string; timestamp: string }> {
     return apiRequest.get('/health');
@@ -36,21 +39,28 @@ class ApiService {
   }
 
   // Get paginated transactions
-  async getPaginatedTransactions(params: PaginationParams): Promise<PaginatedResponse<Transaction>> {
+  async getPaginatedTransactions(
+    params: PaginationParams
+  ): Promise<PaginatedResponse<Transaction>> {
     const queryParams: Record<string, string> = {};
-    
+
     if (params.page) queryParams.page = params.page.toString();
     if (params.limit) queryParams.limit = params.limit.toString();
     if (params.sortBy) queryParams.sortBy = params.sortBy;
     if (params.sortOrder) queryParams.sortOrder = params.sortOrder;
-    
+
     const result = await apiRequest.get<any>('/transactions', queryParams);
-    
+
     // If it's a paginated response, return it as is
-    if (result && typeof result === 'object' && 'data' in result && 'pagination' in result) {
+    if (
+      result &&
+      typeof result === 'object' &&
+      'data' in result &&
+      'pagination' in result
+    ) {
       return result as PaginatedResponse<Transaction>;
     }
-    
+
     // If it's a simple array (backward compatibility), wrap it
     const transactions = Array.isArray(result) ? result : [];
     return {
@@ -62,7 +72,7 @@ class ApiService {
         itemsPerPage: transactions.length,
         hasNextPage: false,
         hasPreviousPage: false,
-      }
+      },
     };
   }
 
@@ -77,7 +87,10 @@ class ApiService {
   }
 
   // Update transaction
-  async updateTransaction(id: string, data: UpdateTransactionDto): Promise<Transaction> {
+  async updateTransaction(
+    id: string,
+    data: UpdateTransactionDto
+  ): Promise<Transaction> {
     return apiRequest.put(`/transactions/${id}`, data);
   }
 
@@ -88,4 +101,9 @@ class ApiService {
 }
 
 export const apiService = new ApiService();
-export { ApiError, type PaginationMeta, type PaginatedResponse, type PaginationParams };
+export {
+  ApiError,
+  type PaginationMeta,
+  type PaginatedResponse,
+  type PaginationParams,
+};

@@ -27,22 +27,26 @@ export const ErrorState: React.FC<ErrorStateProps> = ({
   return (
     <View style={styles.errorContainer}>
       <View style={styles.errorCard}>
-        <Ionicons name="warning" size={48} color={theme.colors.error} />
-        <ThemedText variant="h3" weight="600" style={{ marginTop: theme.spacing.md }}>
+        <Ionicons name='warning' size={48} color={theme.colors.error} />
+        <ThemedText
+          variant='h3'
+          weight='600'
+          style={{ marginTop: theme.spacing.md }}
+        >
           {title}
         </ThemedText>
-        <ThemedText 
-          variant="body2" 
-          color="textSecondary" 
+        <ThemedText
+          variant='body2'
+          color='textSecondary'
           style={{ textAlign: 'center', marginVertical: theme.spacing.sm }}
         >
           {errorMessage}
         </ThemedText>
         {onRetry && (
           <Button
-            title="Retry"
+            title='Retry'
             onPress={onRetry}
-            variant="primary"
+            variant='primary'
             style={{ marginTop: theme.spacing.md }}
           />
         )}

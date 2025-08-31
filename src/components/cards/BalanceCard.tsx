@@ -28,30 +28,24 @@ export const BalanceCard: React.FC<BalanceCardProps> = ({
     })}`;
   };
 
-  const getBalanceColor = () => {
-    if (totalBalance > 0) return 'income';
-    if (totalBalance < 0) return 'expense';
-    return 'text';
-  };
-
   const styles = createBalanceCardStyles(theme);
 
   return (
     <View style={styles.container}>
-      <Card 
-        gradient={true} 
+      <Card
+        gradient={true}
         gradientColors={theme.gradients.primary}
-        padding="large"
+        padding='large'
         elevation={4}
       >
         <View style={styles.header}>
-          <ThemedText variant="body2" color="textSecondary">
+          <ThemedText variant='body2' color='textSecondary'>
             Total Balance
           </ThemedText>
           <View style={styles.balanceContainer}>
-            <ThemedText 
-              variant="h1" 
-              weight="700"
+            <ThemedText
+              variant='h1'
+              weight='700'
               style={{ color: theme.colors.onPrimary }}
             >
               {formatAmount(totalBalance)}
@@ -62,22 +56,24 @@ export const BalanceCard: React.FC<BalanceCardProps> = ({
         <View style={styles.statsContainer}>
           {/* Income */}
           <View style={styles.statItem}>
-            <View style={[styles.statIconContainer, styles.incomeIconContainer]}>
+            <View
+              style={[styles.statIconContainer, styles.incomeIconContainer]}
+            >
               <Ionicons
-                name="trending-up"
+                name='trending-up'
                 size={20}
                 color={theme.colors.income}
               />
             </View>
-            <ThemedText 
-              variant="caption" 
+            <ThemedText
+              variant='caption'
               style={{ color: theme.colors.onPrimary, opacity: 0.8 }}
             >
               Income
             </ThemedText>
-            <ThemedText 
-              variant="body1" 
-              weight="600"
+            <ThemedText
+              variant='body1'
+              weight='600'
               style={{ color: theme.colors.onPrimary }}
             >
               {formatAmount(monthlyIncome)}
@@ -89,22 +85,24 @@ export const BalanceCard: React.FC<BalanceCardProps> = ({
 
           {/* Expenses */}
           <View style={styles.statItem}>
-            <View style={[styles.statIconContainer, styles.expenseIconContainer]}>
+            <View
+              style={[styles.statIconContainer, styles.expenseIconContainer]}
+            >
               <Ionicons
-                name="trending-down"
+                name='trending-down'
                 size={20}
                 color={theme.colors.expense}
               />
             </View>
-            <ThemedText 
-              variant="caption" 
+            <ThemedText
+              variant='caption'
               style={{ color: theme.colors.onPrimary, opacity: 0.8 }}
             >
               Expenses
             </ThemedText>
-            <ThemedText 
-              variant="body1" 
-              weight="600"
+            <ThemedText
+              variant='body1'
+              weight='600'
               style={{ color: theme.colors.onPrimary }}
             >
               {formatAmount(monthlyExpenses)}

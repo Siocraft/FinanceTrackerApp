@@ -1,8 +1,7 @@
 import React, { ReactNode } from 'react';
-import { View, StyleSheet, ViewStyle } from 'react-native';
+import { View, ViewStyle } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '../../theme';
-import { ThemeGradients } from '../../types/theme';
 
 interface CardProps {
   children: ReactNode;
@@ -61,9 +60,5 @@ export const Card: React.FC<CardProps> = ({
     );
   }
 
-  return (
-    <View style={[cardStyle, style]}>
-      {children}
-    </View>
-  );
+  return <View style={[cardStyle, style]}>{children}</View>;
 };

@@ -26,12 +26,12 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({
   return (
     <>
       <View style={styles.sectionHeader}>
-        <ThemedText variant="h3" weight="600">
+        <ThemedText variant='h3' weight='600'>
           Recent Transactions
         </ThemedText>
         {transactions && transactions.length > 3 && (
           <TouchableOpacity onPress={onToggleShowAll}>
-            <ThemedText variant="body2" color="primary">
+            <ThemedText variant='body2' color='primary'>
               {showAllTransactions ? 'Show Less' : 'See All'}
             </ThemedText>
           </TouchableOpacity>
@@ -42,7 +42,7 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({
         {!transactions || transactions.length === 0 ? (
           <EmptyState />
         ) : (
-          transactions.map((transaction) => (
+          transactions.map(transaction => (
             <TransactionCard
               key={transaction.id}
               transaction={transaction}

@@ -17,16 +17,16 @@ export const QuickActions: React.FC<QuickActionsProps> = ({
   return (
     <View style={styles.quickActions}>
       <Button
-        title="Add Income"
+        title='Add Income'
         onPress={onAddTransaction}
-        variant="primary"
+        variant='primary'
         gradient={true}
         style={styles.quickActionButton}
       />
       <Button
-        title="Add Expense"
+        title='Add Expense'
         onPress={onAddTransaction}
-        variant="secondary"
+        variant='secondary'
         gradient={true}
         style={styles.quickActionButton}
       />

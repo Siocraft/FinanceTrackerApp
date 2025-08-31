@@ -22,12 +22,16 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   return (
     <View style={styles.emptyContainer}>
       <Ionicons name={icon} size={64} color={theme.colors.textSecondary} />
-      <ThemedText variant="h3" weight="600" style={{ marginTop: theme.spacing.md }}>
+      <ThemedText
+        variant='h3'
+        weight='600'
+        style={{ marginTop: theme.spacing.md }}
+      >
         {title}
       </ThemedText>
-      <ThemedText 
-        variant="body2" 
-        color="textSecondary" 
+      <ThemedText
+        variant='body2'
+        color='textSecondary'
         style={{ textAlign: 'center', marginTop: theme.spacing.sm }}
       >
         {message}

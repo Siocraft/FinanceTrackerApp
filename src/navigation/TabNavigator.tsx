@@ -11,7 +11,7 @@ import { SettingsScreen } from '../screens/SettingsScreen';
 const Tab = createBottomTabNavigator();
 
 export const TabNavigator: React.FC = () => {
-  const { theme, isDark } = useTheme();
+  const { theme } = useTheme();
   const insets = useSafeAreaInsets();
 
   return (
@@ -56,29 +56,29 @@ export const TabNavigator: React.FC = () => {
         },
       })}
     >
-      <Tab.Screen 
-        name="Home" 
+      <Tab.Screen
+        name='Home'
         component={HomeScreen}
         options={{
           tabBarLabel: 'Home',
         }}
       />
-      <Tab.Screen 
-        name="Transactions" 
+      <Tab.Screen
+        name='Transactions'
         component={TransactionsScreen}
         options={{
           tabBarLabel: 'Transactions',
         }}
       />
-      <Tab.Screen 
-        name="Statistics" 
+      <Tab.Screen
+        name='Statistics'
         component={StatsScreen}
         options={{
           tabBarLabel: 'Stats',
         }}
       />
-      <Tab.Screen 
-        name="Settings" 
+      <Tab.Screen
+        name='Settings'
         component={SettingsScreen}
         options={{
           tabBarLabel: 'Settings',

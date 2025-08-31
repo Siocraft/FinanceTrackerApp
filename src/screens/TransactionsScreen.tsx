@@ -10,11 +10,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
-import {
-  ThemedText,
-  TransactionCard,
-  Button,
-} from '../components';
+import { ThemedText, TransactionCard, Button } from '../components';
 import { useTheme } from '../theme';
 import { useTransactionsQuery } from '../hooks/useTransactionsQuery';
 import { AddTransactionScreen } from './AddTransactionScreen';
@@ -22,12 +18,12 @@ import { AddTransactionScreen } from './AddTransactionScreen';
 export const TransactionsScreen: React.FC = () => {
   const { theme, isDark } = useTheme();
   const [showAddTransaction, setShowAddTransaction] = useState(false);
-  
-  const { 
-    data: transactions = [], 
-    isLoading: loading, 
-    error, 
-    refetch: refresh 
+
+  const {
+    data: transactions = [],
+    isLoading: loading,
+    error,
+    refetch: refresh,
   } = useTransactionsQuery();
 
   const handleAddTransaction = () => {
@@ -101,14 +97,14 @@ export const TransactionsScreen: React.FC = () => {
         <StatusBar style={isDark ? 'light' : 'dark'} />
         <SafeAreaView style={styles.header}>
           <View style={styles.headerRow}>
-            <ThemedText variant="h2" weight="700">
+            <ThemedText variant='h2' weight='700'>
               Transactions
             </ThemedText>
           </View>
         </SafeAreaView>
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color={theme.colors.primary} />
-          <ThemedText variant="body1" style={{ marginTop: theme.spacing.md }}>
+          <ActivityIndicator size='large' color={theme.colors.primary} />
+          <ThemedText variant='body1' style={{ marginTop: theme.spacing.md }}>
             Loading transactions...
           </ThemedText>
         </View>
@@ -122,23 +118,31 @@ export const TransactionsScreen: React.FC = () => {
         <StatusBar style={isDark ? 'light' : 'dark'} />
         <SafeAreaView style={styles.header}>
           <View style={styles.headerRow}>
-            <ThemedText variant="h2" weight="700">
+            <ThemedText variant='h2' weight='700'>
               Transactions
             </ThemedText>
           </View>
         </SafeAreaView>
         <View style={styles.errorContainer}>
-          <Ionicons name="warning" size={48} color={theme.colors.error} />
-          <ThemedText variant="h3" weight="600" style={{ marginTop: theme.spacing.md }}>
+          <Ionicons name='warning' size={48} color={theme.colors.error} />
+          <ThemedText
+            variant='h3'
+            weight='600'
+            style={{ marginTop: theme.spacing.md }}
+          >
             Connection Error
           </ThemedText>
-          <ThemedText variant="body2" color="textSecondary" style={{ textAlign: 'center', marginVertical: theme.spacing.sm }}>
+          <ThemedText
+            variant='body2'
+            color='textSecondary'
+            style={{ textAlign: 'center', marginVertical: theme.spacing.sm }}
+          >
             {error?.message || 'An error occurred'}
           </ThemedText>
           <Button
-            title="Retry"
+            title='Retry'
             onPress={refresh}
-            variant="primary"
+            variant='primary'
             style={{ marginTop: theme.spacing.md }}
           />
         </View>
@@ -149,10 +153,10 @@ export const TransactionsScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <StatusBar style={isDark ? 'light' : 'dark'} />
-      
+
       <SafeAreaView style={styles.header}>
         <View style={styles.headerRow}>
-          <ThemedText variant="h2" weight="700">
+          <ThemedText variant='h2' weight='700'>
             Transactions
           </ThemedText>
         </View>
@@ -162,20 +166,34 @@ export const TransactionsScreen: React.FC = () => {
         <View style={styles.transactionsList}>
           {!transactions || transactions.length === 0 ? (
             <View style={styles.emptyContainer}>
-              <Ionicons name="receipt-outline" size={64} color={theme.colors.textSecondary} />
-              <ThemedText variant="h3" weight="600" style={{ marginTop: theme.spacing.md }}>
+              <Ionicons
+                name='receipt-outline'
+                size={64}
+                color={theme.colors.textSecondary}
+              />
+              <ThemedText
+                variant='h3'
+                weight='600'
+                style={{ marginTop: theme.spacing.md }}
+              >
                 No Transactions Yet
               </ThemedText>
-              <ThemedText variant="body2" color="textSecondary" style={{ textAlign: 'center', marginTop: theme.spacing.sm }}>
+              <ThemedText
+                variant='body2'
+                color='textSecondary'
+                style={{ textAlign: 'center', marginTop: theme.spacing.sm }}
+              >
                 Start by adding your first income or expense transaction
               </ThemedText>
             </View>
           ) : (
-            transactions.map((transaction) => (
+            transactions.map(transaction => (
               <TransactionCard
                 key={transaction.id}
                 transaction={transaction}
-                onPress={() => console.log('Transaction pressed:', transaction.id)}
+                onPress={() =>
+                  console.log('Transaction pressed:', transaction.id)
+                }
               />
             ))
           )}
@@ -183,13 +201,13 @@ export const TransactionsScreen: React.FC = () => {
       </ScrollView>
 
       <TouchableOpacity style={styles.addButton} onPress={handleAddTransaction}>
-        <Ionicons name="add" size={24} color="white" />
+        <Ionicons name='add' size={24} color='white' />
       </TouchableOpacity>
 
       <Modal
         visible={showAddTransaction}
-        animationType="slide"
-        presentationStyle="pageSheet"
+        animationType='slide'
+        presentationStyle='pageSheet'
       >
         <AddTransactionScreen
           onClose={() => setShowAddTransaction(false)}

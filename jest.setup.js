@@ -10,8 +10,21 @@ jest.mock('react-native', () => {
     Linking: {
       openURL: jest.fn(),
     },
+    Platform: {
+      OS: 'ios',
+      select: jest.fn(),
+    },
   };
 });
+
+// Mock TurboModuleRegistry separately
+jest.mock('react-native/Libraries/TurboModule/TurboModuleRegistry', () => ({
+  getEnforcing: jest.fn(() => ({
+    addListener: jest.fn(),
+    removeListeners: jest.fn(),
+  })),
+  get: jest.fn(() => null),
+}));
 
 // Mock Expo modules
 jest.mock('expo-linear-gradient', () => 'LinearGradient');

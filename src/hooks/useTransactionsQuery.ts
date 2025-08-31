@@ -1,27 +1,28 @@
-import { 
-  useQuery, 
-  useMutation, 
-  useQueryClient, 
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
   UseQueryResult,
-  UseMutationResult
+  UseMutationResult,
 } from '@tanstack/react-query';
-import { 
-  Transaction, 
-  CreateTransactionDto, 
-  UpdateTransactionDto 
+import {
+  Transaction,
+  CreateTransactionDto,
+  UpdateTransactionDto,
 } from '../types/financial';
-import { 
-  apiService, 
-  ApiError, 
-  PaginatedResponse, 
-  PaginationParams 
+import {
+  apiService,
+  ApiError,
+  PaginatedResponse,
+  PaginationParams,
 } from '../services/api';
 
 // Query Keys - centralized for consistency
 export const transactionKeys = {
   all: ['transactions'] as const,
   lists: () => [...transactionKeys.all, 'list'] as const,
-  list: (params?: PaginationParams) => [...transactionKeys.lists(), params] as const,
+  list: (params?: PaginationParams) =>
+    [...transactionKeys.lists(), params] as const,
   details: () => [...transactionKeys.all, 'detail'] as const,
   detail: (id: string) => [...transactionKeys.details(), id] as const,
 };
@@ -94,17 +95,16 @@ export const useCreateTransactionMutation = (): UseMutationResult<
 
   return useMutation({
     mutationFn: apiService.createTransaction,
-    onSuccess: (newTransaction) => {
+    onSuccess: newTransaction => {
       // Invalidate and refetch all transaction lists
       queryClient.invalidateQueries({ queryKey: transactionKeys.lists() });
-      
+
       // Optionally add the new transaction to existing cache
-      queryClient.setQueryData<Transaction[]>(
-        transactionKeys.list(),
-        (old) => old ? [newTransaction, ...old] : [newTransaction]
+      queryClient.setQueryData<Transaction[]>(transactionKeys.list(), old =>
+        old ? [newTransaction, ...old] : [newTransaction]
       );
     },
-    onError: (error) => {
+    onError: error => {
       console.error('Failed to create transaction:', error);
     },
   });
@@ -122,29 +122,26 @@ export const useUpdateTransactionMutation = (): UseMutationResult<
     mutationFn: ({ id, data }) => apiService.updateTransaction(id, data),
     onSuccess: (updatedTransaction, { id }) => {
       // Update the individual transaction in cache
-      queryClient.setQueryData(
-        transactionKeys.detail(id),
-        updatedTransaction
-      );
+      queryClient.setQueryData(transactionKeys.detail(id), updatedTransaction);
 
       // Update the transaction in all list caches
       queryClient.setQueriesData<Transaction[]>(
         { queryKey: transactionKeys.lists() },
-        (old) => {
+        old => {
           if (!old) return old;
-          return old.map(transaction => 
+          return old.map(transaction =>
             transaction.id === id ? updatedTransaction : transaction
           );
         }
       );
 
       // Invalidate paginated queries to ensure consistency
-      queryClient.invalidateQueries({ 
+      queryClient.invalidateQueries({
         queryKey: transactionKeys.lists(),
-        refetchType: 'all'
+        refetchType: 'all',
       });
     },
-    onError: (error) => {
+    onError: error => {
       console.error('Failed to update transaction:', error);
     },
   });
@@ -164,30 +161,33 @@ export const useDeleteTransactionMutation = (): UseMutationResult<
       // Remove transaction from all list caches
       queryClient.setQueriesData<Transaction[]>(
         { queryKey: transactionKeys.lists() },
-        (old) => {
+        old => {
           if (!old) return old;
           return old.filter(transaction => transaction.id !== deletedId);
         }
       );
 
       // Remove individual transaction from cache
-      queryClient.removeQueries({ 
-        queryKey: transactionKeys.detail(deletedId) 
+      queryClient.removeQueries({
+        queryKey: transactionKeys.detail(deletedId),
       });
 
       // Invalidate lists to ensure pagination counts are correct
-      queryClient.invalidateQueries({ 
-        queryKey: transactionKeys.lists() 
+      queryClient.invalidateQueries({
+        queryKey: transactionKeys.lists(),
       });
     },
-    onError: (error) => {
+    onError: error => {
       console.error('Failed to delete transaction:', error);
     },
   });
 };
 
 // Health check hook
-export const useHealthQuery = (): UseQueryResult<{ status: string; timestamp: string }, ApiError> => {
+export const useHealthQuery = (): UseQueryResult<
+  { status: string; timestamp: string },
+  ApiError
+> => {
   return useQuery<{ status: string; timestamp: string }, ApiError>({
     queryKey: ['health'],
     queryFn: async (): Promise<{ status: string; timestamp: string }> => {
