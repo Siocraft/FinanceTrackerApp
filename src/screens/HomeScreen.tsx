@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   View,
   StyleSheet,
   ScrollView,
   SafeAreaView,
   TouchableOpacity,
+  ActivityIndicator,
+  Alert,
+  Modal,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
@@ -18,70 +21,93 @@ import {
 } from '../components';
 import { useTheme } from '../theme';
 import { Transaction } from '../types';
-
-// Sample data
-const sampleTransactions: Transaction[] = [
-  {
-    id: '1',
-    title: 'Salary',
-    amount: 5000,
-    type: 'income',
-    category: 'salary',
-    date: new Date('2024-01-15'),
-    description: 'Monthly salary payment',
-  },
-  {
-    id: '2',
-    title: 'Grocery Shopping',
-    amount: 120.50,
-    type: 'expense',
-    category: 'food',
-    date: new Date('2024-01-14'),
-    description: 'Weekly groceries at Whole Foods',
-  },
-  {
-    id: '3',
-    title: 'Freelance Project',
-    amount: 800,
-    type: 'income',
-    category: 'freelance',
-    date: new Date('2024-01-13'),
-    description: 'Web development project',
-  },
-  {
-    id: '4',
-    title: 'Gas Station',
-    amount: 45.20,
-    type: 'expense',
-    category: 'transport',
-    date: new Date('2024-01-12'),
-  },
-  {
-    id: '5',
-    title: 'Netflix Subscription',
-    amount: 15.99,
-    type: 'expense',
-    category: 'entertainment',
-    date: new Date('2024-01-11'),
-    description: 'Monthly subscription',
-  },
-];
+import { useTransactionsQuery, useCreateTransactionMutation } from '../hooks/useTransactionsQuery';
+import { AddTransactionScreen } from './AddTransactionScreen';
 
 export const HomeScreen: React.FC = () => {
   const { theme, themeType, setThemeType, isDark } = useTheme();
   const [showAllTransactions, setShowAllTransactions] = useState(false);
+  const [showAddTransaction, setShowAddTransaction] = useState(false);
+  
+  // Use React Query for API data
+  const { 
+    data: transactions = [], 
+    isLoading: loading, 
+    error, 
+    refetch: refresh 
+  } = useTransactionsQuery({
+    pagination: showAllTransactions ? {} : { limit: 3 },
+  });
 
-  const totalBalance = 8500.75;
-  const monthlyIncome = 5800;
-  const monthlyExpenses = 2100.50;
+  // Calculate statistics from real data
+  const stats = useMemo(() => {
+    // Handle loading or empty state
+    if (!transactions || transactions.length === 0) {
+      return {
+        totalBalance: 0,
+        monthlyIncome: 0,
+        monthlyExpenses: 0,
+        savings: 0,
+        transactionCount: 0,
+        avgDaily: 0,
+      };
+    }
 
-  const displayedTransactions = showAllTransactions 
-    ? sampleTransactions 
-    : sampleTransactions.slice(0, 3);
+    const now = new Date();
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+    
+    const currentMonthTransactions = transactions.filter(transaction => {
+      const transactionDate = new Date(transaction.date);
+      return transactionDate.getMonth() === currentMonth && 
+             transactionDate.getFullYear() === currentYear;
+    });
+
+    const monthlyIncome = currentMonthTransactions
+      .filter(t => t.type === 'income')
+      .reduce((sum, t) => sum + t.amount, 0);
+
+    const monthlyExpenses = currentMonthTransactions
+      .filter(t => t.type === 'expense')
+      .reduce((sum, t) => sum + t.amount, 0);
+
+    const totalBalance = transactions
+      .reduce((sum, t) => sum + (t.type === 'income' ? t.amount : -t.amount), 0);
+
+    const avgDaily = currentMonthTransactions.length > 0 
+      ? (monthlyIncome + monthlyExpenses) / now.getDate()
+      : 0;
+
+    return {
+      totalBalance,
+      monthlyIncome,
+      monthlyExpenses,
+      savings: monthlyIncome - monthlyExpenses,
+      transactionCount: currentMonthTransactions.length,
+      avgDaily,
+    };
+  }, [transactions]);
 
   const toggleTheme = () => {
     const nextTheme = themeType === 'light' ? 'dark' : 'light';
     setThemeType(nextTheme);
+  };
+
+  const handleRefresh = () => {
+    refresh();
+  };
+
+  const handleShowAllToggle = () => {
+    setShowAllTransactions(!showAllTransactions);
+  };
+
+  const handleAddTransaction = () => {
+    setShowAddTransaction(true);
+  };
+
+  const handleTransactionAdded = () => {
+    setShowAddTransaction(false);
+    // React Query will automatically refetch due to mutation invalidation
   };
 
   const styles = StyleSheet.create({
@@ -146,7 +172,110 @@ export const HomeScreen: React.FC = () => {
     statItem: {
       alignItems: 'center',
     },
+    loadingContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    errorContainer: {
+      margin: theme.spacing.lg,
+      padding: theme.spacing.lg,
+      backgroundColor: theme.colors.error + '20',
+      borderRadius: theme.borderRadius.md,
+      alignItems: 'center',
+    },
+    emptyContainer: {
+      alignItems: 'center',
+      paddingVertical: theme.spacing.xl,
+    },
   });
+
+  // Loading state
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <StatusBar style={isDark ? 'light' : 'dark'} />
+        <LinearGradient
+          colors={theme.gradients.background}
+          style={styles.header}
+        >
+          <SafeAreaView>
+            <View style={styles.headerRow}>
+              <View>
+                <ThemedText variant="body2" color="textSecondary">
+                  Welcome back!
+                </ThemedText>
+                <ThemedText variant="h2" weight="700">
+                  Finance Tracker
+                </ThemedText>
+              </View>
+              <TouchableOpacity style={styles.themeButton} onPress={toggleTheme}>
+                <Ionicons
+                  name={isDark ? 'sunny' : 'moon'}
+                  size={20}
+                  color={theme.colors.text}
+                />
+              </TouchableOpacity>
+            </View>
+          </SafeAreaView>
+        </LinearGradient>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color={theme.colors.primary} />
+          <ThemedText variant="body1" style={{ marginTop: theme.spacing.md }}>
+            Loading your transactions...
+          </ThemedText>
+        </View>
+      </View>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <View style={styles.container}>
+        <StatusBar style={isDark ? 'light' : 'dark'} />
+        <LinearGradient
+          colors={theme.gradients.background}
+          style={styles.header}
+        >
+          <SafeAreaView>
+            <View style={styles.headerRow}>
+              <View>
+                <ThemedText variant="body2" color="textSecondary">
+                  Welcome back!
+                </ThemedText>
+                <ThemedText variant="h2" weight="700">
+                  Finance Tracker
+                </ThemedText>
+              </View>
+              <TouchableOpacity style={styles.themeButton} onPress={toggleTheme}>
+                <Ionicons
+                  name={isDark ? 'sunny' : 'moon'}
+                  size={20}
+                  color={theme.colors.text}
+                />
+              </TouchableOpacity>
+            </View>
+          </SafeAreaView>
+        </LinearGradient>
+        <View style={styles.errorContainer}>
+          <Ionicons name="warning" size={48} color={theme.colors.error} />
+          <ThemedText variant="h3" weight="600" style={{ marginTop: theme.spacing.md }}>
+            Connection Error
+          </ThemedText>
+          <ThemedText variant="body2" color="textSecondary" style={{ textAlign: 'center', marginVertical: theme.spacing.sm }}>
+            {error?.message || 'An error occurred'}
+          </ThemedText>
+          <Button
+            title="Retry"
+            onPress={handleRefresh}
+            variant="primary"
+            style={{ marginTop: theme.spacing.md }}
+          />
+        </View>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -180,23 +309,23 @@ export const HomeScreen: React.FC = () => {
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* Balance Card */}
         <BalanceCard
-          totalBalance={totalBalance}
-          monthlyIncome={monthlyIncome}
-          monthlyExpenses={monthlyExpenses}
+          totalBalance={stats.totalBalance}
+          monthlyIncome={stats.monthlyIncome}
+          monthlyExpenses={stats.monthlyExpenses}
         />
 
         {/* Quick Actions */}
         <View style={styles.quickActions}>
           <Button
             title="Add Income"
-            onPress={() => console.log('Add Income')}
+            onPress={handleAddTransaction}
             variant="primary"
             gradient={true}
             style={styles.quickActionButton}
           />
           <Button
             title="Add Expense"
-            onPress={() => console.log('Add Expense')}
+            onPress={handleAddTransaction}
             variant="secondary"
             gradient={true}
             style={styles.quickActionButton}
@@ -214,7 +343,7 @@ export const HomeScreen: React.FC = () => {
                 Transactions
               </ThemedText>
               <ThemedText variant="h3" weight="700" color="primary">
-                {sampleTransactions.length}
+                {stats.transactionCount}
               </ThemedText>
             </View>
             <View style={styles.statItem}>
@@ -222,15 +351,15 @@ export const HomeScreen: React.FC = () => {
                 Avg/Day
               </ThemedText>
               <ThemedText variant="h3" weight="700" color="primary">
-                $67.50
+                ${stats.avgDaily.toFixed(2)}
               </ThemedText>
             </View>
             <View style={styles.statItem}>
               <ThemedText variant="body2" color="textSecondary">
                 Savings
               </ThemedText>
-              <ThemedText variant="h3" weight="700" color="income">
-                $3,699.50
+              <ThemedText variant="h3" weight="700" color={stats.savings >= 0 ? "income" : "expense"}>
+                ${Math.abs(stats.savings).toFixed(2)}
               </ThemedText>
             </View>
           </View>
@@ -241,31 +370,57 @@ export const HomeScreen: React.FC = () => {
           <ThemedText variant="h3" weight="600">
             Recent Transactions
           </ThemedText>
-          <TouchableOpacity onPress={() => setShowAllTransactions(!showAllTransactions)}>
-            <ThemedText variant="body2" color="primary">
-              {showAllTransactions ? 'Show Less' : 'See All'}
-            </ThemedText>
-          </TouchableOpacity>
+          {transactions && transactions.length > 3 && (
+            <TouchableOpacity onPress={handleShowAllToggle}>
+              <ThemedText variant="body2" color="primary">
+                {showAllTransactions ? 'Show Less' : 'See All'}
+              </ThemedText>
+            </TouchableOpacity>
+          )}
         </View>
 
         <View style={styles.transactionsList}>
-          {displayedTransactions.map((transaction) => (
-            <TransactionCard
-              key={transaction.id}
-              transaction={transaction}
-              onPress={() => console.log('Transaction pressed:', transaction.id)}
-            />
-          ))}
+          {!transactions || transactions.length === 0 ? (
+            <View style={styles.emptyContainer}>
+              <Ionicons name="receipt-outline" size={64} color={theme.colors.textSecondary} />
+              <ThemedText variant="h3" weight="600" style={{ marginTop: theme.spacing.md }}>
+                No Transactions Yet
+              </ThemedText>
+              <ThemedText variant="body2" color="textSecondary" style={{ textAlign: 'center', marginTop: theme.spacing.sm }}>
+                Start by adding your first income or expense transaction
+              </ThemedText>
+            </View>
+          ) : (
+            transactions.map((transaction) => (
+              <TransactionCard
+                key={transaction.id}
+                transaction={transaction}
+                onPress={() => console.log('Transaction pressed:', transaction.id)}
+              />
+            ))
+          )}
         </View>
 
         {/* Add Transaction Button */}
         <Button
           title="Add New Transaction"
-          onPress={() => console.log('Add Transaction')}
+          onPress={handleAddTransaction}
           variant="outline"
           style={{ marginBottom: theme.spacing.xl }}
         />
       </ScrollView>
+
+      {/* Add Transaction Modal */}
+      <Modal
+        visible={showAddTransaction}
+        animationType="slide"
+        presentationStyle="pageSheet"
+      >
+        <AddTransactionScreen
+          onClose={() => setShowAddTransaction(false)}
+          onSuccess={handleTransactionAdded}
+        />
+      </Modal>
     </View>
   );
 };

@@ -62,22 +62,22 @@ export const lightColors: ThemeColors = {
 
 // Dark Theme Gradients
 export const darkGradients: ThemeGradients = {
-  primary: ['#6C63FF', '#9C88FF'],
-  secondary: ['#FF6B9D', '#FF8FB3'],
-  background: ['#0F0F23', '#1A1A2E'],
-  card: ['#16213E', '#1A1A2E'],
-  income: ['#00E676', '#69F0AE'],
-  expense: ['#FF5722', '#FF8A65'],
-  neutral: ['#424242', '#616161'],
+  primary: ['#6C63FF', '#9C88FF'] as const,
+  secondary: ['#FF6B9D', '#FF8FB3'] as const,
+  background: ['#0F0F23', '#1A1A2E'] as const,
+  card: ['#16213E', '#1A1A2E'] as const,
+  income: ['#00E676', '#69F0AE'] as const,
+  expense: ['#FF5722', '#FF8A65'] as const,
+  neutral: ['#424242', '#616161'] as const,
 };
 
 // Light Theme Gradients
 export const lightGradients: ThemeGradients = {
-  primary: ['#6C63FF', '#9C88FF'],
-  secondary: ['#FF6B9D', '#FF8FB3'],
-  background: ['#F8F9FA', '#FFFFFF'],
-  card: ['#FFFFFF', '#F5F5F5'],
-  income: ['#4CAF50', '#81C784'],
-  expense: ['#F44336', '#E57373'],
-  neutral: ['#E0E0E0', '#F5F5F5'],
+  primary: ['#6C63FF', '#9C88FF'] as const,
+  secondary: ['#FF6B9D', '#FF8FB3'] as const,
+  background: ['#F8F9FA', '#FFFFFF'] as const,
+  card: ['#FFFFFF', '#F5F5F5'] as const,
+  income: ['#4CAF50', '#81C784'] as const,
+  expense: ['#F44336', '#E57373'] as const,
+  neutral: ['#E0E0E0', '#F5F5F5'] as const,
 };

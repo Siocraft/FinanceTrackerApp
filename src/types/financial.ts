@@ -21,13 +21,27 @@ export type TransactionCategory = IncomeCategory | ExpenseCategory;
 
 export interface Transaction {
   id: string;
-  title: string;
   amount: number;
+  description: string;
+  category: string;
   type: TransactionType;
-  category: TransactionCategory;
-  date: Date;
+  date: string;
+  createdAt: string;
+  updatedAt?: string;
+}
+
+export interface CreateTransactionDto {
+  amount: number;
+  description: string;
+  category: string;
+  type: TransactionType;
+}
+
+export interface UpdateTransactionDto {
+  amount?: number;
   description?: string;
-  tags?: string[];
+  category?: string;
+  type?: TransactionType;
 }
 
 export interface MonthlyStats {

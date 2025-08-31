@@ -28,13 +28,13 @@ export interface ThemeColors {
 }
 
 export interface ThemeGradients {
-  primary: string[];
-  secondary: string[];
-  background: string[];
-  card: string[];
-  income: string[];
-  expense: string[];
-  neutral: string[];
+  primary: readonly [string, string, ...string[]];
+  secondary: readonly [string, string, ...string[]];
+  background: readonly [string, string, ...string[]];
+  card: readonly [string, string, ...string[]];
+  income: readonly [string, string, ...string[]];
+  expense: readonly [string, string, ...string[]];
+  neutral: readonly [string, string, ...string[]];
 }
 
 export interface ThemeSpacing {

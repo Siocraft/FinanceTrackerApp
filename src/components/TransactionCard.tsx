@@ -45,7 +45,8 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
     return `${sign}$${Math.abs(amount).toFixed(2)}`;
   };
 
-  const formatDate = (date: Date) => {
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric',
@@ -111,7 +112,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
           <View style={styles.textContainer}>
             <View style={styles.titleRow}>
               <ThemedText variant="body1" weight="600">
-                {transaction.title}
+                {transaction.description}
               </ThemedText>
               <ThemedText
                 variant="body1"
@@ -124,22 +125,12 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
             
             <View style={styles.categoryRow}>
               <ThemedText variant="body2" color="textSecondary">
-                {transaction.category.replace('_', ' ').toUpperCase()}
+                {transaction.category.replace(/[_-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
               </ThemedText>
               <ThemedText variant="body2" color="textSecondary">
                 {formatDate(transaction.date)}
               </ThemedText>
             </View>
-            
-            {transaction.description && (
-              <ThemedText 
-                variant="caption" 
-                color="textSecondary"
-                style={{ marginTop: theme.spacing.xs }}
-              >
-                {transaction.description}
-              </ThemedText>
-            )}
           </View>
         </View>
       </Card>
