@@ -308,7 +308,7 @@ export const StatsScreen: React.FC = () => {
             </Card>
 
             {/* Category Breakdown */}
-            <Card style={[styles.statsCard, { marginBottom: theme.spacing.xl }]} padding="large">
+            <Card style={{ ...styles.statsCard, marginBottom: theme.spacing.xl }} padding="large">
               <ThemedText variant="h3" weight="600" style={{ marginBottom: theme.spacing.md }}>
                 Categories
               </ThemedText>

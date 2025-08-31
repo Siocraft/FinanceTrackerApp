@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { AppTheme } from '../types/theme';
+import { AppTheme } from '../../types/theme';
 
 export const createErrorStateStyles = (theme: AppTheme) => StyleSheet.create({
   errorContainer: {

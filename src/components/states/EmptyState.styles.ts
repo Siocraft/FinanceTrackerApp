@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { AppTheme } from '../types/theme';
+import { AppTheme } from '../../types/theme';
 
 export const createEmptyStateStyles = (theme: AppTheme) => StyleSheet.create({
   emptyContainer: {

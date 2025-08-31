@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { AppTheme } from '../types/theme';
+import { AppTheme } from '../../types/theme';
 
 export const createQuickActionsStyles = (theme: AppTheme) => StyleSheet.create({
   quickActions: {

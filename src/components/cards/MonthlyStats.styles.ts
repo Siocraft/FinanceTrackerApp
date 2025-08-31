@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { AppTheme } from '../types/theme';
+import { AppTheme } from '../../types/theme';
 
 export const createMonthlyStatsStyles = (theme: AppTheme) => StyleSheet.create({
   statsCard: {

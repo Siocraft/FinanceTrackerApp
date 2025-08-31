@@ -2,12 +2,13 @@ import React, { ReactNode } from 'react';
 import { View, StyleSheet, ViewStyle } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '../../theme';
+import { ThemeGradients } from '../../types/theme';
 
 interface CardProps {
   children: ReactNode;
   style?: ViewStyle;
   gradient?: boolean;
-  gradientColors?: string[];
+  gradientColors?: readonly [string, string, ...string[]];
   elevation?: number;
   padding?: 'none' | 'small' | 'medium' | 'large';
 }

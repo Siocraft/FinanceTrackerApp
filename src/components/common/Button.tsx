@@ -92,6 +92,7 @@ export const Button: React.FC<ButtonProps> = ({
     const baseTextStyle: TextStyle = {
       ...theme.typography.button,
       textAlign: 'center',
+      fontWeight: theme.typography.button.fontWeight as any,
     };
 
     const variantTextStyles = {

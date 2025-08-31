@@ -37,9 +37,9 @@ export const useTransactionsQuery = (
 ): UseQueryResult<Transaction[], ApiError> => {
   const { pagination, enabled = true } = options;
 
-  return useQuery({
+  return useQuery<Transaction[], ApiError>({
     queryKey: transactionKeys.list(pagination),
-    queryFn: async () => {
+    queryFn: async (): Promise<Transaction[]> => {
       if (pagination && (pagination.page || pagination.limit)) {
         // Use paginated endpoint
         const response = await apiService.getPaginatedTransactions(pagination);
@@ -59,11 +59,12 @@ export const usePaginatedTransactionsQuery = (
   params: PaginationParams,
   options: { enabled?: boolean } = {}
 ): UseQueryResult<PaginatedResponse<Transaction>, ApiError> => {
-  return useQuery({
+  return useQuery<PaginatedResponse<Transaction>, ApiError>({
     queryKey: transactionKeys.list(params),
-    queryFn: () => apiService.getPaginatedTransactions(params),
+    queryFn: async (): Promise<PaginatedResponse<Transaction>> => {
+      return apiService.getPaginatedTransactions(params);
+    },
     enabled: options.enabled ?? true,
-    keepPreviousData: true, // Keep previous page data while loading next page
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
 };
@@ -73,9 +74,11 @@ export const useTransactionQuery = (
   id: string,
   options: { enabled?: boolean } = {}
 ): UseQueryResult<Transaction, ApiError> => {
-  return useQuery({
+  return useQuery<Transaction, ApiError>({
     queryKey: transactionKeys.detail(id),
-    queryFn: () => apiService.getTransaction(id),
+    queryFn: async (): Promise<Transaction> => {
+      return apiService.getTransaction(id);
+    },
     enabled: options.enabled ?? Boolean(id),
     staleTime: 10 * 60 * 1000, // 10 minutes for individual transactions
   });
@@ -185,9 +188,11 @@ export const useDeleteTransactionMutation = (): UseMutationResult<
 
 // Health check hook
 export const useHealthQuery = (): UseQueryResult<{ status: string; timestamp: string }, ApiError> => {
-  return useQuery({
+  return useQuery<{ status: string; timestamp: string }, ApiError>({
     queryKey: ['health'],
-    queryFn: apiService.healthCheck,
+    queryFn: async (): Promise<{ status: string; timestamp: string }> => {
+      return apiService.healthCheck();
+    },
     staleTime: 30 * 1000, // 30 seconds
     refetchInterval: 60 * 1000, // Refetch every minute
   });
