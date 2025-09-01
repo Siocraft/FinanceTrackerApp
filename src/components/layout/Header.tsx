@@ -29,7 +29,7 @@ export const Header: React.FC<HeaderProps> = ({
   const displaySubtitle = subtitle || t('header.subtitle');
 
   // Animation values
-  const headerPadding = useRef(new Animated.Value(theme.spacing.md)).current;
+  const headerHeight = useRef(new Animated.Value(120)).current; // Start with full height
   const subtitleOpacity = useRef(new Animated.Value(1)).current;
   const titleScale = useRef(new Animated.Value(1)).current;
   const iconScale = useRef(new Animated.Value(1)).current;
@@ -46,10 +46,9 @@ export const Header: React.FC<HeaderProps> = ({
         1
       );
 
-      // Animate header padding (from theme.spacing.md to theme.spacing.xs)
-      Animated.timing(headerPadding, {
-        toValue:
-          theme.spacing.md - progress * (theme.spacing.md - theme.spacing.xs),
+      // Animate header height (from 120 to 80)
+      Animated.timing(headerHeight, {
+        toValue: 120 - progress * 40, // Reduce height by 40px
         duration: 0,
         useNativeDriver: false,
       }).start();
@@ -77,30 +76,24 @@ export const Header: React.FC<HeaderProps> = ({
     });
 
     return () => scrollY.removeListener(listener);
-  }, [
-    scrollY,
-    headerPadding,
-    subtitleOpacity,
-    titleScale,
-    iconScale,
-    theme.spacing.md,
-    theme.spacing.xs,
-  ]);
+  }, [scrollY, headerHeight, subtitleOpacity, titleScale, iconScale]);
 
   return (
-    <View style={styles.headerContainer}>
+    <Animated.View
+      style={[
+        styles.headerContainer,
+        {
+          height: headerHeight,
+        },
+      ]}
+    >
       <LinearGradient
         colors={[
           theme.colors.primary,
           theme.colors.secondary || `${theme.colors.primary}88`,
           theme.colors.primary + '99',
         ]}
-        style={[
-          styles.header,
-          {
-            paddingTop: headerPadding,
-          },
-        ]}
+        style={styles.header}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
       >
@@ -141,6 +134,6 @@ export const Header: React.FC<HeaderProps> = ({
           </View>
         </SafeAreaView>
       </LinearGradient>
-    </View>
+    </Animated.View>
   );
 };
