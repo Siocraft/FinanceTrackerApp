@@ -6,11 +6,10 @@ import {
   ActivityIndicator,
   Modal,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
-import { ThemedText, TransactionCard, Button } from '../../components';
+import { ThemedText, TransactionCard, Button, Header } from '../../components';
 import { useTheme } from '../../theme';
 import { useTransactionsQuery } from '../../hooks/useTransactionsQuery';
 import { AddTransactionScreen } from '../AddTransactionScreen';
@@ -18,7 +17,7 @@ import { createStyles } from './styles';
 
 export const TransactionsScreen: React.FC = () => {
   const { t } = useTranslation();
-  const { theme, isDark } = useTheme();
+  const { theme } = useTheme();
   const styles = createStyles(theme);
   const [showAddTransaction, setShowAddTransaction] = useState(false);
 
@@ -40,14 +39,12 @@ export const TransactionsScreen: React.FC = () => {
   if (loading) {
     return (
       <View style={styles.container}>
-        <StatusBar style={isDark ? 'light' : 'dark'} />
-        <SafeAreaView style={styles.header}>
-          <View style={styles.headerRow}>
-            <ThemedText variant='h2' weight='700'>
-              {t('transactions.title')}
-            </ThemedText>
-          </View>
-        </SafeAreaView>
+        <StatusBar style='light' />
+        <Header
+          title={t('transactions.title')}
+          subtitle={t('transactions.subtitle')}
+          icon='receipt'
+        />
         <View style={styles.loadingContainer}>
           <ActivityIndicator size='large' color={theme.colors.primary} />
           <ThemedText variant='body1' style={styles.loadingText}>
@@ -61,14 +58,12 @@ export const TransactionsScreen: React.FC = () => {
   if (error) {
     return (
       <View style={styles.container}>
-        <StatusBar style={isDark ? 'light' : 'dark'} />
-        <SafeAreaView style={styles.header}>
-          <View style={styles.headerRow}>
-            <ThemedText variant='h2' weight='700'>
-              {t('transactions.title')}
-            </ThemedText>
-          </View>
-        </SafeAreaView>
+        <StatusBar style='light' />
+        <Header
+          title={t('transactions.title')}
+          subtitle={t('transactions.subtitle')}
+          icon='receipt'
+        />
         <View style={styles.errorContainer}>
           <Ionicons name='warning' size={48} color={theme.colors.error} />
           <ThemedText variant='h3' weight='600' style={styles.errorTitle}>
@@ -94,15 +89,13 @@ export const TransactionsScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar style={isDark ? 'light' : 'dark'} />
+      <StatusBar style='light' />
 
-      <SafeAreaView style={styles.header}>
-        <View style={styles.headerRow}>
-          <ThemedText variant='h2' weight='700'>
-            Transactions
-          </ThemedText>
-        </View>
-      </SafeAreaView>
+      <Header
+        title={t('transactions.title')}
+        subtitle={t('transactions.subtitle')}
+        icon='receipt'
+      />
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.transactionsList}>

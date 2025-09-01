@@ -81,4 +81,18 @@ export const createStyles = (theme: Theme) =>
     headerSpacer: {
       width: 24,
     },
+    closeButtonContainer: {
+      position: 'absolute',
+      top: 60,
+      right: 16,
+      zIndex: 1000,
+    },
+    closeButton: {
+      width: 44,
+      height: 44,
+      borderRadius: 22,
+      backgroundColor: 'rgba(0, 0, 0, 0.3)',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
   });

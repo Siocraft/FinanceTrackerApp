@@ -1,11 +1,9 @@
 import React, { useMemo } from 'react';
 import { View, ScrollView, ActivityIndicator } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useTranslation } from 'react-i18next';
-import { ThemedText, Card, Button } from '../../components';
+import { ThemedText, Card, Button, Header } from '../../components';
 import { useTheme } from '../../theme';
 import { useTransactionsQuery } from '../../hooks/useTransactionsQuery';
 import { createStyles } from './styles';
@@ -100,27 +98,11 @@ export const StatsScreen: React.FC = () => {
     return (
       <View style={styles.container}>
         <StatusBar style='light' />
-        <LinearGradient
-          colors={[
-            theme.colors.primary,
-            theme.colors.secondary || theme.colors.primary + '88',
-          ]}
-          style={styles.headerGradient}
-        >
-          <SafeAreaView>
-            <View style={styles.headerContent}>
-              <Ionicons
-                name='analytics'
-                size={28}
-                color='#FFFFFF'
-                style={styles.headerIcon}
-              />
-              <ThemedText variant='h2' weight='700' style={styles.headerTitle}>
-                {t('stats.title')}
-              </ThemedText>
-            </View>
-          </SafeAreaView>
-        </LinearGradient>
+        <Header
+          title={t('stats.title')}
+          subtitle={t('stats.subtitle')}
+          icon='analytics'
+        />
         <View style={styles.loadingContainer}>
           <ActivityIndicator size='large' color={theme.colors.primary} />
           <ThemedText variant='body1' style={styles.loadingText}>
@@ -135,27 +117,11 @@ export const StatsScreen: React.FC = () => {
     return (
       <View style={styles.container}>
         <StatusBar style='light' />
-        <LinearGradient
-          colors={[
-            theme.colors.primary,
-            theme.colors.secondary || theme.colors.primary + '88',
-          ]}
-          style={styles.headerGradient}
-        >
-          <SafeAreaView>
-            <View style={styles.headerContent}>
-              <Ionicons
-                name='analytics'
-                size={28}
-                color='#FFFFFF'
-                style={styles.headerIcon}
-              />
-              <ThemedText variant='h2' weight='700' style={styles.headerTitle}>
-                {t('stats.title')}
-              </ThemedText>
-            </View>
-          </SafeAreaView>
-        </LinearGradient>
+        <Header
+          title={t('stats.title')}
+          subtitle={t('stats.subtitle')}
+          icon='analytics'
+        />
         <View style={styles.errorContainer}>
           <Ionicons name='warning' size={48} color={theme.colors.error} />
           <ThemedText variant='h3' weight='600' style={styles.errorTitle}>
@@ -183,27 +149,11 @@ export const StatsScreen: React.FC = () => {
     <View style={styles.container}>
       <StatusBar style='light' />
 
-      <LinearGradient
-        colors={[
-          theme.colors.primary,
-          theme.colors.secondary || theme.colors.primary + '88',
-        ]}
-        style={styles.headerGradient}
-      >
-        <SafeAreaView>
-          <View style={styles.headerContent}>
-            <Ionicons
-              name='analytics'
-              size={28}
-              color='#FFFFFF'
-              style={styles.headerIcon}
-            />
-            <ThemedText variant='h2' weight='700' style={styles.headerTitle}>
-              {t('stats.title')}
-            </ThemedText>
-          </View>
-        </SafeAreaView>
-      </LinearGradient>
+      <Header
+        title={t('stats.title')}
+        subtitle={t('stats.subtitle')}
+        icon='analytics'
+      />
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {transactions.length === 0 ? (

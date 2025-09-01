@@ -6,11 +6,10 @@ import {
   Alert,
   TextInput,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
-import { ThemedText, Button } from '../../components';
+import { ThemedText, Button, Header } from '../../components';
 import { useTheme } from '../../theme';
 import { TransactionType, CreateTransactionDto } from '../../types';
 import { useCreateTransactionMutation } from '../../hooks/useTransactionsQuery';
@@ -25,7 +24,7 @@ export const AddTransactionScreen: React.FC<AddTransactionScreenProps> = ({
   onClose,
   onSuccess,
 }) => {
-  const { theme, isDark } = useTheme();
+  const { theme } = useTheme();
   const styles = createStyles(theme);
   const { t } = useTranslation();
   const createTransactionMutation = useCreateTransactionMutation();
@@ -102,19 +101,20 @@ export const AddTransactionScreen: React.FC<AddTransactionScreenProps> = ({
 
   return (
     <View style={styles.container}>
-      <StatusBar style={isDark ? 'light' : 'dark'} />
+      <StatusBar style='light' />
 
-      <SafeAreaView>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={onClose}>
-            <Ionicons name='close' size={24} color={theme.colors.text} />
-          </TouchableOpacity>
-          <ThemedText variant='h3' weight='600'>
-            {t('addTransaction.title')}
-          </ThemedText>
-          <View style={styles.headerSpacer} />
-        </View>
-      </SafeAreaView>
+      <Header
+        title={t('addTransaction.title')}
+        subtitle={t('addTransaction.subtitle')}
+        icon='add-circle'
+      />
+
+      {/* Close button positioned over header */}
+      <View style={styles.closeButtonContainer}>
+        <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+          <Ionicons name='close' size={24} color='#FFFFFF' />
+        </TouchableOpacity>
+      </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* Type Selection */}

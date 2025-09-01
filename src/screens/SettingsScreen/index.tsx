@@ -1,17 +1,16 @@
 import React from 'react';
 import { View, ScrollView, TouchableOpacity, Alert } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
-import { ThemedText, Card } from '../../components';
+import { ThemedText, Card, Header } from '../../components';
 import { useTheme } from '../../theme';
 import { useLanguageSelector } from '../../i18n/LanguageSelector';
 import { createStyles } from './styles';
 
 export const SettingsScreen: React.FC = () => {
   const { t } = useTranslation();
-  const { theme, themeType, setThemeType, isDark } = useTheme();
+  const { theme, themeType, setThemeType } = useTheme();
   const styles = createStyles(theme);
   const { currentLanguage, showLanguageSelector } = useLanguageSelector();
 
@@ -95,13 +94,13 @@ export const SettingsScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar style={isDark ? 'light' : 'dark'} />
+      <StatusBar style='light' />
 
-      <SafeAreaView style={styles.header}>
-        <ThemedText variant='h2' weight='700'>
-          {t('settings.title')}
-        </ThemedText>
-      </SafeAreaView>
+      <Header
+        title={t('settings.title')}
+        subtitle={t('settings.subtitle')}
+        icon='settings'
+      />
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* Appearance Section */}
