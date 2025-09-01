@@ -4,10 +4,11 @@ import { AppTheme } from '../../types/theme';
 export const createHeaderStyles = (theme: AppTheme) =>
   StyleSheet.create({
     headerContainer: {
-      // Remove overflow hidden to prevent cutting
+      overflow: 'hidden',
     },
     header: {
       paddingHorizontal: theme.spacing.lg,
+      paddingTop: theme.spacing.md,
       paddingBottom: 0,
       borderBottomLeftRadius: theme.borderRadius.xl,
       borderBottomRightRadius: theme.borderRadius.xl,
