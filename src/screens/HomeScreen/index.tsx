@@ -20,7 +20,7 @@ import { createHomeScreenStyles } from './styles';
 
 export const HomeScreen: React.FC = () => {
   const { t } = useTranslation();
-  const { isDark, themeType, setThemeType, theme } = useTheme();
+  const { isDark, theme } = useTheme();
   const [showAllTransactions, setShowAllTransactions] = useState(false);
   const [showAddTransaction, setShowAddTransaction] = useState(false);
 
@@ -36,11 +36,6 @@ export const HomeScreen: React.FC = () => {
 
   // Use custom hook for statistics calculation
   const stats = useTransactionStats(transactions);
-
-  const toggleTheme = () => {
-    const nextTheme = themeType === 'light' ? 'dark' : 'light';
-    setThemeType(nextTheme);
-  };
 
   const handleRefresh = () => {
     refresh();
@@ -73,7 +68,7 @@ export const HomeScreen: React.FC = () => {
           style={isDark ? 'light' : 'dark'}
           backgroundColor={theme.colors.background}
         />
-        <Header onThemeToggle={toggleTheme} />
+        <Header />
         <LoadingState />
       </View>
     );
@@ -84,7 +79,7 @@ export const HomeScreen: React.FC = () => {
     return (
       <View style={styles.container}>
         <StatusBar style={isDark ? 'light' : 'dark'} />
-        <Header onThemeToggle={toggleTheme} />
+        <Header />
         <ErrorState error={error} onRetry={handleRefresh} />
       </View>
     );
@@ -94,7 +89,7 @@ export const HomeScreen: React.FC = () => {
     <View style={styles.container}>
       <StatusBar style={isDark ? 'light' : 'dark'} />
 
-      <Header onThemeToggle={toggleTheme} />
+      <Header />
 
       <ScrollView
         style={styles.content}
