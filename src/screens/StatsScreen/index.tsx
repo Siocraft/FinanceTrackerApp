@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { View, ScrollView, ActivityIndicator } from 'react-native';
+import React, { useMemo, useRef } from 'react';
+import { View, ActivityIndicator, Animated } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +12,7 @@ export const StatsScreen: React.FC = () => {
   const { t } = useTranslation();
   const { theme } = useTheme();
   const styles = createStyles(theme);
+  const scrollY = useRef(new Animated.Value(0)).current;
 
   const {
     data: transactions = [],
@@ -153,9 +154,18 @@ export const StatsScreen: React.FC = () => {
         title={t('stats.title')}
         subtitle={t('stats.subtitle')}
         icon='analytics'
+        scrollY={scrollY}
       />
 
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+      <Animated.ScrollView
+        style={styles.content}
+        showsVerticalScrollIndicator={false}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: false }
+        )}
+        scrollEventThrottle={16}
+      >
         {transactions.length === 0 ? (
           <View style={styles.emptyContainer}>
             <Ionicons
@@ -312,7 +322,7 @@ export const StatsScreen: React.FC = () => {
             </Card>
           </>
         )}
-      </ScrollView>
+      </Animated.ScrollView>
     </View>
   );
 };

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, ScrollView, Modal } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, Animated, Modal } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useTranslation } from 'react-i18next';
 import {
@@ -23,6 +23,7 @@ export const HomeScreen: React.FC = () => {
   const { isDark, theme } = useTheme();
   const [showAllTransactions, setShowAllTransactions] = useState(false);
   const [showAddTransaction, setShowAddTransaction] = useState(false);
+  const scrollY = useRef(new Animated.Value(0)).current;
 
   // Use React Query for API data
   const {
@@ -68,7 +69,7 @@ export const HomeScreen: React.FC = () => {
           style={isDark ? 'light' : 'dark'}
           backgroundColor={theme.colors.background}
         />
-        <Header />
+        <Header scrollY={scrollY} />
         <LoadingState />
       </View>
     );
@@ -79,7 +80,7 @@ export const HomeScreen: React.FC = () => {
     return (
       <View style={styles.container}>
         <StatusBar style={isDark ? 'light' : 'dark'} />
-        <Header />
+        <Header scrollY={scrollY} />
         <ErrorState error={error} onRetry={handleRefresh} />
       </View>
     );
@@ -89,12 +90,17 @@ export const HomeScreen: React.FC = () => {
     <View style={styles.container}>
       <StatusBar style={isDark ? 'light' : 'dark'} />
 
-      <Header />
+      <Header scrollY={scrollY} />
 
-      <ScrollView
+      <Animated.ScrollView
         style={styles.content}
         contentContainerStyle={{ backgroundColor: theme.colors.background }}
         showsVerticalScrollIndicator={false}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: false }
+        )}
+        scrollEventThrottle={16}
       >
         {/* Balance Card */}
         <BalanceCard
@@ -128,7 +134,7 @@ export const HomeScreen: React.FC = () => {
           variant='outline'
           style={{ marginBottom: 32 }}
         />
-      </ScrollView>
+      </Animated.ScrollView>
 
       {/* Add Transaction Modal */}
       <Modal

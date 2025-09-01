@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
-  ScrollView,
   TouchableOpacity,
   Alert,
   TextInput,
+  Animated,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
@@ -28,6 +28,7 @@ export const AddTransactionScreen: React.FC<AddTransactionScreenProps> = ({
   const styles = createStyles(theme);
   const { t } = useTranslation();
   const createTransactionMutation = useCreateTransactionMutation();
+  const scrollY = useRef(new Animated.Value(0)).current;
 
   const [formData, setFormData] = useState({
     amount: '',
@@ -107,6 +108,7 @@ export const AddTransactionScreen: React.FC<AddTransactionScreenProps> = ({
         title={t('addTransaction.title')}
         subtitle={t('addTransaction.subtitle')}
         icon='add-circle'
+        scrollY={scrollY}
       />
 
       {/* Close button positioned over header */}
@@ -116,7 +118,15 @@ export const AddTransactionScreen: React.FC<AddTransactionScreenProps> = ({
         </TouchableOpacity>
       </View>
 
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+      <Animated.ScrollView
+        style={styles.content}
+        showsVerticalScrollIndicator={false}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: false }
+        )}
+        scrollEventThrottle={16}
+      >
         {/* Type Selection */}
         <View style={styles.section}>
           <ThemedText variant='body1' weight='600' style={styles.label}>
@@ -241,7 +251,7 @@ export const AddTransactionScreen: React.FC<AddTransactionScreenProps> = ({
             marginBottom: theme.spacing.xl,
           }}
         />
-      </ScrollView>
+      </Animated.ScrollView>
     </View>
   );
 };
