@@ -11,12 +11,12 @@ import {
   MonthlyStats,
   TransactionsList,
   Button,
-} from '../components';
-import { useTheme } from '../theme';
-import { useTransactionsQuery } from '../hooks/useTransactionsQuery';
-import { useTransactionStats } from '../hooks/useTransactionStats';
-import { AddTransactionScreen } from './AddTransactionScreen';
-import { createHomeScreenStyles } from './HomeScreen.styles';
+} from '../../components';
+import { useTheme } from '../../theme';
+import { useTransactionsQuery } from '../../hooks/useTransactionsQuery';
+import { useTransactionStats } from '../../hooks/useTransactionStats';
+import { AddTransactionScreen } from '../AddTransactionScreen';
+import { createHomeScreenStyles } from './styles';
 
 export const HomeScreen: React.FC = () => {
   const { t } = useTranslation();

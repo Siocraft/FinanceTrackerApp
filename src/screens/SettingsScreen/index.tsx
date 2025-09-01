@@ -1,22 +1,18 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import { View, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
-import { ThemedText, Card } from '../components';
-import { useTheme } from '../theme';
-import { useLanguageSelector } from '../i18n/LanguageSelector';
+import { ThemedText, Card } from '../../components';
+import { useTheme } from '../../theme';
+import { useLanguageSelector } from '../../i18n/LanguageSelector';
+import { createStyles } from './styles';
 
 export const SettingsScreen: React.FC = () => {
   const { t } = useTranslation();
   const { theme, themeType, setThemeType, isDark } = useTheme();
+  const styles = createStyles(theme);
   const { currentLanguage, showLanguageSelector } = useLanguageSelector();
 
   const toggleTheme = () => {
@@ -47,60 +43,6 @@ export const SettingsScreen: React.FC = () => {
       [{ text: t('common.ok') }]
     );
   };
-
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: theme.colors.background,
-    },
-    header: {
-      paddingHorizontal: theme.spacing.lg,
-      paddingTop: theme.spacing.lg,
-      paddingBottom: theme.spacing.md,
-    },
-    content: {
-      flex: 1,
-      paddingHorizontal: theme.spacing.lg,
-    },
-    section: {
-      marginBottom: theme.spacing.lg,
-    },
-    settingItem: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingVertical: theme.spacing.md,
-      paddingHorizontal: theme.spacing.lg,
-      borderBottomWidth: 1,
-      borderBottomColor: theme.colors.border,
-    },
-    settingIcon: {
-      marginRight: theme.spacing.md,
-    },
-    settingContent: {
-      flex: 1,
-    },
-    settingTitle: {
-      marginBottom: theme.spacing.xs,
-    },
-
-    themeToggle: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginLeft: 'auto',
-    },
-    themeOption: {
-      paddingHorizontal: theme.spacing.sm,
-      paddingVertical: theme.spacing.xs,
-      borderRadius: theme.borderRadius.sm,
-      marginLeft: theme.spacing.xs,
-    },
-    themeOptionActive: {
-      backgroundColor: theme.colors.primary,
-    },
-    lastItem: {
-      borderBottomWidth: 0,
-    },
-  });
 
   const SettingItem: React.FC<{
     icon: string;

@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
-import { AppTheme } from '../types/theme';
+import type { themes } from '../../theme';
+
+type AppTheme = typeof themes.light;
 
 export const createHomeScreenStyles = (theme: AppTheme) =>
   StyleSheet.create({

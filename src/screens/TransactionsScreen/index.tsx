@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   View,
-  StyleSheet,
   ScrollView,
   TouchableOpacity,
   ActivityIndicator,
@@ -11,14 +10,16 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
-import { ThemedText, TransactionCard, Button } from '../components';
-import { useTheme } from '../theme';
-import { useTransactionsQuery } from '../hooks/useTransactionsQuery';
-import { AddTransactionScreen } from './AddTransactionScreen';
+import { ThemedText, TransactionCard, Button } from '../../components';
+import { useTheme } from '../../theme';
+import { useTransactionsQuery } from '../../hooks/useTransactionsQuery';
+import { AddTransactionScreen } from '../AddTransactionScreen';
+import { createStyles } from './styles';
 
 export const TransactionsScreen: React.FC = () => {
   const { t } = useTranslation();
   const { theme, isDark } = useTheme();
+  const styles = createStyles(theme);
   const [showAddTransaction, setShowAddTransaction] = useState(false);
 
   const {
@@ -36,63 +37,6 @@ export const TransactionsScreen: React.FC = () => {
     setShowAddTransaction(false);
   };
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: theme.colors.background,
-    },
-    header: {
-      paddingHorizontal: theme.spacing.lg,
-      paddingTop: theme.spacing.lg,
-      paddingBottom: theme.spacing.md,
-    },
-    headerRow: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: theme.spacing.md,
-    },
-    content: {
-      flex: 1,
-      paddingHorizontal: theme.spacing.lg,
-    },
-    transactionsList: {
-      marginBottom: theme.spacing.xl,
-    },
-    loadingContainer: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    errorContainer: {
-      margin: theme.spacing.lg,
-      padding: theme.spacing.lg,
-      backgroundColor: theme.colors.error + '20',
-      borderRadius: theme.borderRadius.md,
-      alignItems: 'center',
-    },
-    emptyContainer: {
-      alignItems: 'center',
-      paddingVertical: theme.spacing.xl,
-    },
-    addButton: {
-      position: 'absolute',
-      bottom: theme.spacing.lg,
-      right: theme.spacing.lg,
-      width: 56,
-      height: 56,
-      borderRadius: 28,
-      backgroundColor: theme.colors.primary,
-      alignItems: 'center',
-      justifyContent: 'center',
-      shadowColor: theme.colors.text,
-      shadowOffset: { width: 0, height: 4 },
-      shadowOpacity: 0.3,
-      shadowRadius: 8,
-      elevation: 8,
-    },
-  });
-
   if (loading) {
     return (
       <View style={styles.container}>
@@ -106,7 +50,7 @@ export const TransactionsScreen: React.FC = () => {
         </SafeAreaView>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size='large' color={theme.colors.primary} />
-          <ThemedText variant='body1' style={{ marginTop: theme.spacing.md }}>
+          <ThemedText variant='body1' style={styles.loadingText}>
             {t('transactions.loading')}
           </ThemedText>
         </View>
@@ -127,17 +71,13 @@ export const TransactionsScreen: React.FC = () => {
         </SafeAreaView>
         <View style={styles.errorContainer}>
           <Ionicons name='warning' size={48} color={theme.colors.error} />
-          <ThemedText
-            variant='h3'
-            weight='600'
-            style={{ marginTop: theme.spacing.md }}
-          >
+          <ThemedText variant='h3' weight='600' style={styles.errorTitle}>
             {t('transactions.error.title')}
           </ThemedText>
           <ThemedText
             variant='body2'
             color='textSecondary'
-            style={{ textAlign: 'center', marginVertical: theme.spacing.sm }}
+            style={styles.errorMessage}
           >
             {error?.message || t('transactions.error.message')}
           </ThemedText>
@@ -145,7 +85,7 @@ export const TransactionsScreen: React.FC = () => {
             title='Retry'
             onPress={refresh}
             variant='primary'
-            style={{ marginTop: theme.spacing.md }}
+            style={styles.errorTitle}
           />
         </View>
       </View>
@@ -173,17 +113,13 @@ export const TransactionsScreen: React.FC = () => {
                 size={64}
                 color={theme.colors.textSecondary}
               />
-              <ThemedText
-                variant='h3'
-                weight='600'
-                style={{ marginTop: theme.spacing.md }}
-              >
+              <ThemedText variant='h3' weight='600' style={styles.errorTitle}>
                 {t('transactions.empty.title')}
               </ThemedText>
               <ThemedText
                 variant='body2'
                 color='textSecondary'
-                style={{ textAlign: 'center', marginTop: theme.spacing.sm }}
+                style={styles.emptyMessage}
               >
                 {t('transactions.empty.message')}
               </ThemedText>

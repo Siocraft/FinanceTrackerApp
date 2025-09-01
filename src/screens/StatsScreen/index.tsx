@@ -1,16 +1,19 @@
 import React, { useMemo } from 'react';
-import { View, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
+import { View, ScrollView, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useTranslation } from 'react-i18next';
-import { ThemedText, Card, Button } from '../components';
-import { useTheme } from '../theme';
-import { useTransactionsQuery } from '../hooks/useTransactionsQuery';
+import { ThemedText, Card, Button } from '../../components';
+import { useTheme } from '../../theme';
+import { useTransactionsQuery } from '../../hooks/useTransactionsQuery';
+import { createStyles } from './styles';
 
 export const StatsScreen: React.FC = () => {
   const { t } = useTranslation();
-  const { theme, isDark } = useTheme();
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
 
   const {
     data: transactions = [],
@@ -93,72 +96,34 @@ export const StatsScreen: React.FC = () => {
     };
   }, [transactions]);
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: theme.colors.background,
-    },
-    header: {
-      paddingHorizontal: theme.spacing.lg,
-      paddingTop: theme.spacing.lg,
-      paddingBottom: theme.spacing.md,
-    },
-    content: {
-      flex: 1,
-      paddingHorizontal: theme.spacing.lg,
-    },
-    statsCard: {
-      marginBottom: theme.spacing.lg,
-    },
-    statsRow: {
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-    },
-    statItem: {
-      alignItems: 'center',
-      flex: 1,
-    },
-    categoryItem: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      paddingVertical: theme.spacing.sm,
-      borderBottomWidth: 1,
-      borderBottomColor: theme.colors.border,
-    },
-    categoryAmounts: {
-      alignItems: 'flex-end',
-    },
-    loadingContainer: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    errorContainer: {
-      margin: theme.spacing.lg,
-      padding: theme.spacing.lg,
-      backgroundColor: theme.colors.error + '20',
-      borderRadius: theme.borderRadius.md,
-      alignItems: 'center',
-    },
-    emptyContainer: {
-      alignItems: 'center',
-      paddingVertical: theme.spacing.xl,
-    },
-  });
-
   if (loading) {
     return (
       <View style={styles.container}>
-        <StatusBar style={isDark ? 'light' : 'dark'} />
-        <SafeAreaView style={styles.header}>
-          <ThemedText variant='h2' weight='700'>
-            {t('stats.title')}
-          </ThemedText>
-        </SafeAreaView>
+        <StatusBar style='light' />
+        <LinearGradient
+          colors={[
+            theme.colors.primary,
+            theme.colors.secondary || theme.colors.primary + '88',
+          ]}
+          style={styles.headerGradient}
+        >
+          <SafeAreaView>
+            <View style={styles.headerContent}>
+              <Ionicons
+                name='analytics'
+                size={28}
+                color='#FFFFFF'
+                style={styles.headerIcon}
+              />
+              <ThemedText variant='h2' weight='700' style={styles.headerTitle}>
+                {t('stats.title')}
+              </ThemedText>
+            </View>
+          </SafeAreaView>
+        </LinearGradient>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size='large' color={theme.colors.primary} />
-          <ThemedText variant='body1' style={{ marginTop: theme.spacing.md }}>
+          <ThemedText variant='body1' style={styles.loadingText}>
             {t('stats.loading')}
           </ThemedText>
         </View>
@@ -169,25 +134,37 @@ export const StatsScreen: React.FC = () => {
   if (error) {
     return (
       <View style={styles.container}>
-        <StatusBar style={isDark ? 'light' : 'dark'} />
-        <SafeAreaView style={styles.header}>
-          <ThemedText variant='h2' weight='700'>
-            {t('stats.title')}
-          </ThemedText>
-        </SafeAreaView>
+        <StatusBar style='light' />
+        <LinearGradient
+          colors={[
+            theme.colors.primary,
+            theme.colors.secondary || theme.colors.primary + '88',
+          ]}
+          style={styles.headerGradient}
+        >
+          <SafeAreaView>
+            <View style={styles.headerContent}>
+              <Ionicons
+                name='analytics'
+                size={28}
+                color='#FFFFFF'
+                style={styles.headerIcon}
+              />
+              <ThemedText variant='h2' weight='700' style={styles.headerTitle}>
+                {t('stats.title')}
+              </ThemedText>
+            </View>
+          </SafeAreaView>
+        </LinearGradient>
         <View style={styles.errorContainer}>
           <Ionicons name='warning' size={48} color={theme.colors.error} />
-          <ThemedText
-            variant='h3'
-            weight='600'
-            style={{ marginTop: theme.spacing.md }}
-          >
+          <ThemedText variant='h3' weight='600' style={styles.errorTitle}>
             {t('stats.error.title')}
           </ThemedText>
           <ThemedText
             variant='body2'
             color='textSecondary'
-            style={{ textAlign: 'center', marginVertical: theme.spacing.sm }}
+            style={styles.errorMessage}
           >
             {error?.message || t('stats.error.message')}
           </ThemedText>
@@ -195,7 +172,7 @@ export const StatsScreen: React.FC = () => {
             title='Retry'
             onPress={refresh}
             variant='primary'
-            style={{ marginTop: theme.spacing.md }}
+            style={styles.retryButton}
           />
         </View>
       </View>
@@ -204,13 +181,29 @@ export const StatsScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar style={isDark ? 'light' : 'dark'} />
+      <StatusBar style='light' />
 
-      <SafeAreaView style={styles.header}>
-        <ThemedText variant='h2' weight='700'>
-          Statistics
-        </ThemedText>
-      </SafeAreaView>
+      <LinearGradient
+        colors={[
+          theme.colors.primary,
+          theme.colors.secondary || theme.colors.primary + '88',
+        ]}
+        style={styles.headerGradient}
+      >
+        <SafeAreaView>
+          <View style={styles.headerContent}>
+            <Ionicons
+              name='analytics'
+              size={28}
+              color='#FFFFFF'
+              style={styles.headerIcon}
+            />
+            <ThemedText variant='h2' weight='700' style={styles.headerTitle}>
+              {t('stats.title')}
+            </ThemedText>
+          </View>
+        </SafeAreaView>
+      </LinearGradient>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {transactions.length === 0 ? (
@@ -220,17 +213,13 @@ export const StatsScreen: React.FC = () => {
               size={64}
               color={theme.colors.textSecondary}
             />
-            <ThemedText
-              variant='h3'
-              weight='600'
-              style={{ marginTop: theme.spacing.md }}
-            >
+            <ThemedText variant='h3' weight='600' style={styles.emptyTitle}>
               {t('stats.empty.title')}
             </ThemedText>
             <ThemedText
               variant='body2'
               color='textSecondary'
-              style={{ textAlign: 'center', marginTop: theme.spacing.sm }}
+              style={styles.emptyMessage}
             >
               {t('stats.empty.message')}
             </ThemedText>
@@ -242,7 +231,7 @@ export const StatsScreen: React.FC = () => {
               <ThemedText
                 variant='h3'
                 weight='600'
-                style={{ marginBottom: theme.spacing.md }}
+                style={styles.overviewTitle}
               >
                 {t('stats.sections.overview')}
               </ThemedText>
@@ -272,11 +261,7 @@ export const StatsScreen: React.FC = () => {
 
             {/* All Time Stats */}
             <Card style={styles.statsCard} padding='large'>
-              <ThemedText
-                variant='h3'
-                weight='600'
-                style={{ marginBottom: theme.spacing.md }}
-              >
+              <ThemedText variant='h3' weight='600' style={styles.allTimeTitle}>
                 {t('stats.sections.allTime')}
               </ThemedText>
               <View style={styles.statsRow}>
@@ -312,7 +297,7 @@ export const StatsScreen: React.FC = () => {
               <ThemedText
                 variant='h3'
                 weight='600'
-                style={{ marginBottom: theme.spacing.md }}
+                style={styles.thisMonthTitle}
               >
                 {t('stats.sections.thisMonth')}
               </ThemedText>
@@ -345,14 +330,11 @@ export const StatsScreen: React.FC = () => {
             </Card>
 
             {/* Category Breakdown */}
-            <Card
-              style={{ ...styles.statsCard, marginBottom: theme.spacing.xl }}
-              padding='large'
-            >
+            <Card style={styles.categoriesCard} padding='large'>
               <ThemedText
                 variant='h3'
                 weight='600'
-                style={{ marginBottom: theme.spacing.md }}
+                style={styles.categoriesTitle}
               >
                 {t('stats.sections.categories')}
               </ThemedText>

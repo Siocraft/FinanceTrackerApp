@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   View,
-  StyleSheet,
   ScrollView,
   TouchableOpacity,
   Alert,
@@ -11,10 +10,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
-import { ThemedText, Button } from '../components';
-import { useTheme } from '../theme';
-import { TransactionType, CreateTransactionDto } from '../types';
-import { useCreateTransactionMutation } from '../hooks/useTransactionsQuery';
+import { ThemedText, Button } from '../../components';
+import { useTheme } from '../../theme';
+import { TransactionType, CreateTransactionDto } from '../../types';
+import { useCreateTransactionMutation } from '../../hooks/useTransactionsQuery';
+import { createStyles } from './styles';
 
 interface AddTransactionScreenProps {
   onClose: () => void;
@@ -26,6 +26,7 @@ export const AddTransactionScreen: React.FC<AddTransactionScreenProps> = ({
   onSuccess,
 }) => {
   const { theme, isDark } = useTheme();
+  const styles = createStyles(theme);
   const { t } = useTranslation();
   const createTransactionMutation = useCreateTransactionMutation();
 
@@ -99,66 +100,6 @@ export const AddTransactionScreen: React.FC<AddTransactionScreenProps> = ({
     }
   };
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: theme.colors.background,
-    },
-    header: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      paddingHorizontal: theme.spacing.lg,
-      paddingVertical: theme.spacing.md,
-      borderBottomWidth: 1,
-      borderBottomColor: theme.colors.border,
-    },
-    content: {
-      flex: 1,
-      padding: theme.spacing.lg,
-    },
-    section: {
-      marginBottom: theme.spacing.lg,
-    },
-    label: {
-      marginBottom: theme.spacing.sm,
-    },
-    input: {
-      borderWidth: 1,
-      borderColor: theme.colors.border,
-      borderRadius: theme.borderRadius.md,
-      padding: theme.spacing.md,
-      fontSize: 16,
-      color: theme.colors.text,
-      backgroundColor: theme.colors.surface,
-    },
-    typeSelector: {
-      flexDirection: 'row',
-      marginBottom: theme.spacing.md,
-    },
-    typeButton: {
-      flex: 1,
-      padding: theme.spacing.md,
-      borderRadius: theme.borderRadius.md,
-      borderWidth: 1,
-      marginHorizontal: theme.spacing.xs,
-      alignItems: 'center',
-    },
-    categoryGrid: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      marginHorizontal: -theme.spacing.xs,
-    },
-    categoryButton: {
-      width: '30%',
-      margin: theme.spacing.xs,
-      padding: theme.spacing.sm,
-      borderRadius: theme.borderRadius.md,
-      borderWidth: 1,
-      alignItems: 'center',
-    },
-  });
-
   return (
     <View style={styles.container}>
       <StatusBar style={isDark ? 'light' : 'dark'} />
@@ -171,7 +112,7 @@ export const AddTransactionScreen: React.FC<AddTransactionScreenProps> = ({
           <ThemedText variant='h3' weight='600'>
             {t('addTransaction.title')}
           </ThemedText>
-          <View style={{ width: 24 }} />
+          <View style={styles.headerSpacer} />
         </View>
       </SafeAreaView>
 
@@ -185,16 +126,7 @@ export const AddTransactionScreen: React.FC<AddTransactionScreenProps> = ({
             <TouchableOpacity
               style={[
                 styles.typeButton,
-                {
-                  borderColor:
-                    formData.type === 'income'
-                      ? theme.colors.income
-                      : theme.colors.border,
-                  backgroundColor:
-                    formData.type === 'income'
-                      ? `${theme.colors.income}20`
-                      : 'transparent',
-                },
+                formData.type === 'income' && styles.typeButtonIncome,
               ]}
               onPress={() =>
                 setFormData({ ...formData, type: 'income', category: '' })
@@ -211,16 +143,7 @@ export const AddTransactionScreen: React.FC<AddTransactionScreenProps> = ({
             <TouchableOpacity
               style={[
                 styles.typeButton,
-                {
-                  borderColor:
-                    formData.type === 'expense'
-                      ? theme.colors.expense
-                      : theme.colors.border,
-                  backgroundColor:
-                    formData.type === 'expense'
-                      ? `${theme.colors.expense}20`
-                      : 'transparent',
-                },
+                formData.type === 'expense' && styles.typeButtonExpense,
               ]}
               onPress={() =>
                 setFormData({ ...formData, type: 'expense', category: '' })
@@ -281,16 +204,8 @@ export const AddTransactionScreen: React.FC<AddTransactionScreenProps> = ({
                   key={categoryKey}
                   style={[
                     styles.categoryButton,
-                    {
-                      borderColor:
-                        formData.category === categoryLabel
-                          ? theme.colors.primary
-                          : theme.colors.border,
-                      backgroundColor:
-                        formData.category === categoryLabel
-                          ? `${theme.colors.primary}20`
-                          : 'transparent',
-                    },
+                    formData.category === categoryLabel &&
+                      styles.categoryButtonSelected,
                   ]}
                   onPress={() =>
                     setFormData({ ...formData, category: categoryLabel })
