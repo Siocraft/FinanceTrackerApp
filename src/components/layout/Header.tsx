@@ -29,7 +29,7 @@ export const Header: React.FC<HeaderProps> = ({
   const displaySubtitle = subtitle || t('header.subtitle');
 
   // Animation values
-  const headerHeight = useRef(new Animated.Value(1)).current;
+  const headerPadding = useRef(new Animated.Value(theme.spacing.md)).current;
   const subtitleOpacity = useRef(new Animated.Value(1)).current;
   const titleScale = useRef(new Animated.Value(1)).current;
   const iconScale = useRef(new Animated.Value(1)).current;
@@ -46,9 +46,10 @@ export const Header: React.FC<HeaderProps> = ({
         1
       );
 
-      // Animate header height (from 1 to 0.6)
-      Animated.timing(headerHeight, {
-        toValue: 1 - progress * 0.4,
+      // Animate header padding (from theme.spacing.md to theme.spacing.xs)
+      Animated.timing(headerPadding, {
+        toValue:
+          theme.spacing.md - progress * (theme.spacing.md - theme.spacing.xs),
         duration: 0,
         useNativeDriver: false,
       }).start();
@@ -76,24 +77,30 @@ export const Header: React.FC<HeaderProps> = ({
     });
 
     return () => scrollY.removeListener(listener);
-  }, [scrollY, headerHeight, subtitleOpacity, titleScale, iconScale]);
+  }, [
+    scrollY,
+    headerPadding,
+    subtitleOpacity,
+    titleScale,
+    iconScale,
+    theme.spacing.md,
+    theme.spacing.xs,
+  ]);
 
   return (
-    <Animated.View
-      style={[
-        styles.headerContainer,
-        {
-          transform: [{ scaleY: headerHeight }],
-        },
-      ]}
-    >
+    <View style={styles.headerContainer}>
       <LinearGradient
         colors={[
           theme.colors.primary,
           theme.colors.secondary || `${theme.colors.primary}88`,
           theme.colors.primary + '99',
         ]}
-        style={styles.header}
+        style={[
+          styles.header,
+          {
+            paddingTop: headerPadding,
+          },
+        ]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
       >
@@ -134,6 +141,6 @@ export const Header: React.FC<HeaderProps> = ({
           </View>
         </SafeAreaView>
       </LinearGradient>
-    </Animated.View>
+    </View>
   );
 };
