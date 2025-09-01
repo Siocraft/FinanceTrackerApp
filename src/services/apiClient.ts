@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosError, AxiosResponse } from 'axios';
 import { env } from '../config/env';
+import { auth } from '../config/firebase';
 
 // Custom error class for API errors
 export class ApiError extends Error {
@@ -23,15 +24,26 @@ const createApiClient = (): AxiosInstance => {
     },
   });
 
-  // Request interceptor for logging
+  // Request interceptor for authentication and logging
   client.interceptors.request.use(
-    config => {
+    async config => {
+      // Add Firebase auth token if user is authenticated
+      if (auth.currentUser) {
+        try {
+          const token = await auth.currentUser.getIdToken();
+          config.headers.Authorization = `Bearer ${token}`;
+        } catch (error) {
+          console.error('Failed to get auth token:', error);
+        }
+      }
+
       if (env.DEBUG) {
         console.log(
           `🚀 API Request: ${config.method?.toUpperCase()} ${config.url}`,
           {
             params: config.params,
             data: config.data,
+            hasAuth: !!config.headers.Authorization,
           }
         );
       }

@@ -3,19 +3,22 @@ import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemeProvider } from './src/theme';
 import { QueryProvider } from './src/providers/QueryProvider';
-import { TabNavigator } from './src/navigation';
+import { AuthProvider } from './src/contexts/AuthContext';
+import { RootNavigator } from './src/navigation/RootNavigator';
 import './src/i18n';
 
 export default function App() {
   return (
     <SafeAreaProvider>
-      <QueryProvider>
-        <ThemeProvider>
-          <NavigationContainer>
-            <TabNavigator />
-          </NavigationContainer>
-        </ThemeProvider>
-      </QueryProvider>
+      <AuthProvider>
+        <QueryProvider>
+          <ThemeProvider>
+            <NavigationContainer>
+              <RootNavigator />
+            </NavigationContainer>
+          </ThemeProvider>
+        </QueryProvider>
+      </AuthProvider>
     </SafeAreaProvider>
   );
 }

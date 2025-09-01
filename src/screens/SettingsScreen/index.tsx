@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { ThemedText, Card, Header } from '../../components';
 import { useTheme } from '../../theme';
 import { useLanguageSelector } from '../../i18n/LanguageSelector';
+import { useAuth } from '../../contexts/AuthContext';
 import { createStyles } from './styles';
 
 export const SettingsScreen: React.FC = () => {
@@ -13,6 +14,7 @@ export const SettingsScreen: React.FC = () => {
   const { theme, themeType, setThemeType } = useTheme();
   const styles = createStyles(theme);
   const { currentLanguage, showLanguageSelector } = useLanguageSelector();
+  const { logout, user } = useAuth();
 
   const toggleTheme = () => {
     const nextTheme = themeType === 'light' ? 'dark' : 'light';
@@ -41,6 +43,23 @@ export const SettingsScreen: React.FC = () => {
       t('settings.alerts.support.message'),
       [{ text: t('common.ok') }]
     );
+  };
+
+  const handleLogout = () => {
+    Alert.alert('Logout', 'Are you sure you want to logout?', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Logout',
+        style: 'destructive',
+        onPress: async () => {
+          try {
+            await logout();
+          } catch (error) {
+            Alert.alert('Error', 'Failed to logout. Please try again.');
+          }
+        },
+      },
+    ]);
   };
 
   const SettingItem: React.FC<{
@@ -190,6 +209,26 @@ export const SettingsScreen: React.FC = () => {
               title={t('settings.items.about.title')}
               subtitle={t('settings.items.about.subtitle')}
               onPress={showAbout}
+              isLast
+            />
+          </Card>
+        </View>
+
+        {/* Account Section */}
+        <View style={styles.section}>
+          <Card padding='none'>
+            <SettingItem
+              icon='person-circle'
+              title='Account'
+              subtitle={user?.email || 'Not logged in'}
+              onPress={() => {}}
+              showArrow={false}
+            />
+            <SettingItem
+              icon='log-out'
+              title='Logout'
+              subtitle='Sign out of your account'
+              onPress={handleLogout}
               isLast
             />
           </Card>
