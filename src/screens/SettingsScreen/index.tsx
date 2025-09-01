@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { View, TouchableOpacity, Alert, Animated } from 'react-native';
+import React from 'react';
+import { View, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +13,6 @@ export const SettingsScreen: React.FC = () => {
   const { theme, themeType, setThemeType } = useTheme();
   const styles = createStyles(theme);
   const { currentLanguage, showLanguageSelector } = useLanguageSelector();
-  const scrollY = useRef(new Animated.Value(0)).current;
 
   const toggleTheme = () => {
     const nextTheme = themeType === 'light' ? 'dark' : 'light';
@@ -101,18 +100,9 @@ export const SettingsScreen: React.FC = () => {
         title={t('settings.title')}
         subtitle={t('settings.subtitle')}
         icon='settings'
-        scrollY={scrollY}
       />
 
-      <Animated.ScrollView
-        style={styles.content}
-        showsVerticalScrollIndicator={false}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-          { useNativeDriver: false }
-        )}
-        scrollEventThrottle={16}
-      >
+      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* Appearance Section */}
         <View style={styles.section}>
           <Card padding='none'>
@@ -222,7 +212,7 @@ export const SettingsScreen: React.FC = () => {
             {t('settings.footer.built')}
           </ThemedText>
         </View>
-      </Animated.ScrollView>
+      </ScrollView>
     </View>
   );
 };

@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import {
   View,
+  ScrollView,
   TouchableOpacity,
   ActivityIndicator,
   Modal,
-  Animated,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
@@ -20,7 +20,6 @@ export const TransactionsScreen: React.FC = () => {
   const { theme } = useTheme();
   const styles = createStyles(theme);
   const [showAddTransaction, setShowAddTransaction] = useState(false);
-  const scrollY = useRef(new Animated.Value(0)).current;
 
   const {
     data: transactions = [],
@@ -96,18 +95,9 @@ export const TransactionsScreen: React.FC = () => {
         title={t('transactions.title')}
         subtitle={t('transactions.subtitle')}
         icon='receipt'
-        scrollY={scrollY}
       />
 
-      <Animated.ScrollView
-        style={styles.content}
-        showsVerticalScrollIndicator={false}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-          { useNativeDriver: false }
-        )}
-        scrollEventThrottle={16}
-      >
+      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.transactionsList}>
           {!transactions || transactions.length === 0 ? (
             <View style={styles.emptyContainer}>
@@ -139,7 +129,7 @@ export const TransactionsScreen: React.FC = () => {
             ))
           )}
         </View>
-      </Animated.ScrollView>
+      </ScrollView>
 
       <TouchableOpacity style={styles.addButton} onPress={handleAddTransaction}>
         <Ionicons name='add' size={24} color='white' />

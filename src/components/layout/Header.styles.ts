@@ -3,9 +3,6 @@ import { AppTheme } from '../../types/theme';
 
 export const createHeaderStyles = (theme: AppTheme) =>
   StyleSheet.create({
-    headerContainer: {
-      overflow: 'hidden',
-    },
     header: {
       paddingHorizontal: theme.spacing.lg,
       paddingTop: theme.spacing.md,
