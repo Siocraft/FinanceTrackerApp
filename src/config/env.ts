@@ -72,13 +72,3 @@ const parseEnvConfig = (): EnvConfig => {
 
 // Export the configuration
 export const env = parseEnvConfig();
-
-// Development helper
-if (env.DEBUG) {
-  console.log('🔧 Environment Configuration:', {
-    API_BASE_URL: env.API_BASE_URL,
-    API_TIMEOUT: env.API_TIMEOUT,
-    DEBUG: env.DEBUG,
-    LOG_LEVEL: env.LOG_LEVEL,
-  });
-}

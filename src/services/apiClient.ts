@@ -26,21 +26,9 @@ const createApiClient = (): AxiosInstance => {
   // Request interceptor for logging
   client.interceptors.request.use(
     config => {
-      if (env.DEBUG) {
-        console.log(
-          `🚀 API Request: ${config.method?.toUpperCase()} ${config.url}`,
-          {
-            params: config.params,
-            data: config.data,
-          }
-        );
-      }
       return config;
     },
     error => {
-      if (env.DEBUG) {
-        console.error('🚨 API Request Error:', error);
-      }
       return Promise.reject(error);
     }
   );
@@ -48,27 +36,9 @@ const createApiClient = (): AxiosInstance => {
   // Response interceptor for error handling
   client.interceptors.response.use(
     (response: AxiosResponse) => {
-      if (env.DEBUG) {
-        console.log(
-          `✅ API Response: ${response.config.method?.toUpperCase()} ${response.config.url}`,
-          {
-            status: response.status,
-            data: response.data,
-          }
-        );
-      }
       return response;
     },
     (error: AxiosError) => {
-      if (env.DEBUG) {
-        console.error('🚨 API Response Error:', {
-          url: error.config?.url,
-          status: error.response?.status,
-          message: error.message,
-          data: error.response?.data,
-        });
-      }
-
       // Transform axios error to our custom error
       if (error.response) {
         // Server responded with error status
