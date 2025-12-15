@@ -56,25 +56,6 @@ const createQueryClient = () => {
 // Create a singleton instance
 const queryClient = createQueryClient();
 
-// Development tools
-if (env.DEBUG) {
-  // Log query client events
-  queryClient.getQueryCache().subscribe(event => {
-    console.log('🔍 Query Cache Event:', {
-      type: event.type,
-      queryKey: event.query?.queryKey,
-      queryHash: event.query?.queryHash,
-    });
-  });
-
-  queryClient.getMutationCache().subscribe(event => {
-    console.log('🔄 Mutation Cache Event:', {
-      type: event.type,
-      mutationKey: event.mutation?.options.mutationKey,
-    });
-  });
-}
-
 // Query Provider component
 interface QueryProviderProps {
   children: React.ReactNode;
