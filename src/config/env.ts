@@ -28,8 +28,28 @@ const getEnvVar = (key: string, fallback: string = ''): string => {
 
 // Parse environment variables with type safety
 const parseEnvConfig = (): EnvConfig => {
+  const apiBaseUrl = getEnvVar('API_BASE_URL');
+
+  // Warn if using localhost (this won't work on physical devices)
+  // Note: For real devices, you MUST use your local network IP address
+  if (apiBaseUrl.includes('localhost') && !apiBaseUrl.includes('127.0.0.1')) {
+    const isDev =
+      typeof __DEV__ !== 'undefined'
+        ? __DEV__
+        : process.env.NODE_ENV !== 'production';
+    if (isDev) {
+      console.warn(
+        '⚠️  WARNING: Using localhost for API_BASE_URL.\n' +
+          '   This will NOT work on a physical device!\n' +
+          '   Please update app.json extra.API_BASE_URL to use your local network IP.\n' +
+          '   Example: http://192.168.1.100:3000\n' +
+          '   Find your IP with: ifconfig | grep "inet " | grep -v 127.0.0.1'
+      );
+    }
+  }
+
   const config: EnvConfig = {
-    API_BASE_URL: getEnvVar('API_BASE_URL', 'http://localhost:3000'),
+    API_BASE_URL: apiBaseUrl,
     API_TIMEOUT: parseInt(getEnvVar('API_TIMEOUT', '10000'), 10),
     APP_NAME: getEnvVar('APP_NAME', 'Finance Tracker'),
     APP_VERSION: getEnvVar('APP_VERSION', '1.0.0'),
